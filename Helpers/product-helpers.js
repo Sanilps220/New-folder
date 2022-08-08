@@ -102,7 +102,6 @@ module.exports={
             db.get().collection(collection.WISHLIST_COLLECTION)
             .insertOne(cartObj)
             .then((result)=>{
-                console.log('Added to Wish');
                 resolve(result);
             })
         }
