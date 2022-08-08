@@ -1,0 +1,70 @@
+  <div class="col-12">
+    <form id="salesReport">
+        <div class="row">
+            <div class="col">
+                <p>Sales report</p>
+                <div class="px-3 px-4">
+                    <div class="col row">
+                        <div class="col">
+                            <p>Form Date:</p>
+                            <input type="date" name="fromDate" id="fromDate" onClick="getFromDate()" />
+                        </div>
+                        <div class="col">
+                            <p>Till Date:</p>
+                            <input type="date" name="tillDate" id="tillDate" />
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="">
+                            <p></p>
+                            <button
+                            class="btn btn-success px-4 py-2" onclick="getReports()"
+                            style="border-radius: 30px;">
+                            View Report
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+  
+  
+  <hr>
+
+ <div class="kol">
+<table class="table mt-5 ">
+  <thead>
+    <tr>
+      <th scope="col">SL No.</th><th scope="col">Product</th><th scope="col">Sold Qty</th><th scope="col">Selling Price</th><th scope="col">Total Sale</th>
+      {{!-- <th scope="col">Landing Coast</th> --}}
+      <th scope="col">Profit</th>
+    </tr>
+  </thead>
+  <tbody>
+{{#if salesReport}}{{#each salesReport}}
+    <tr>
+        <td>{{@index}}</td>
+        <td>{{this._id}}</td>
+        <td>{{this.totalQty}}</td>
+        {{!-- <td>this.productVarient</td> --}}
+        <td>{{this.totalSale}}</td>
+        <td>{{this.netCost}}</td>
+        <td>{{this.profit}}</td>
+    </tr>{{/each}}
+  {{/if}}
+  </tbody>
+  </table>
+
+  <script>
+    function getReports(){
+        let fromDate = document.getElementById('fromDate').value
+        let tillDate = document.getElementById('tillDate').value
+        $.ajax({
+           url:`/admin/salesReport?fromDate=${fromDate}&tillDate=${tillDate}`,
+           method:'get',
+           success:()=>{            
+           }
+        })
+    }
+  </script>

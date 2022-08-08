@@ -1,0 +1,108 @@
+
+
+
+
+{{!-- pt-4 sec" style="position: relative; width: 800px;"> --}}
+
+<div class="col-12" id="orders"> 
+    <h1>Summery</h1>
+    <table class="table " id="#example">
+      <thead>
+        <tr>
+          <th scope="col">Date</th>
+          <th scope="col">Address</th>
+          <th scope="col">Pin code</th>
+          <th scope="col">Mobile</th>
+
+          <th scope="col">Payment</th>
+          <th scope="col">Status</th>
+          <th scope="col">Update</th>
+          <th scope="col">Cancel</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        {{#each orders}}
+        <tr>
+          <td scope="row" style="font-size: small;">{{this.orderObj.date}}</td>
+          <td> {{this.orderObj.deliveryDetails.order}}</td>
+          <td>{{this.orderObj.deliveryDetails.pincode}} </td>
+          <td>{{this.orderObj.deliveryDetails.mobile}} </td>
+
+          <td>{{this.orderObj.PaymentMethod}} </td>
+          <td id="colors">{{this.orderObj.status}} </td>
+       
+        {{#if this.cancelStatus}}
+        <td class="text-secondary">Cancelled</a></td>
+        {{else}}         
+          <form action="/admin/place-product/{{this._id}}" method="post">
+          <td>
+            <select name="status" class="btn btn-outline-dark" id="">
+              <option value="">{{this.orderObj.status}}</option>
+              <option value="Packed">Packed</option>
+              <option value="Shipped">Ship</option>
+              <option value="Delivered">Delivered</option>
+            </select>        
+            <button class="btn btn-primary" type="submit" >Update</button>
+          </td>
+
+          </form>
+          {{/if}}
+          {{#if this.OrderStatus}}
+          <td></td>
+          {{else}} 
+          <td> 
+            <a class="btn btn-danger" onclick="cancelorder()" href="/admin/cancelOrder/{{this._id}}">
+            <i class="bi bi-x-circle"></i>
+            </a>
+            </td> 
+          {{/if}}  
+        </tr>
+        {{/each}}
+      </tbody>
+    </table>
+   
+  </div>
+
+
+
+<script type="text/javascript" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/2.2.3/js/dataTables.buttons.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.4.1/js/buttons.flash.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+<script type="text/javascropt" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.html5.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.print.min.js"></script>
+
+<script>
+  $(document).ready(function(){
+    $('#example').DataTable({
+      dom: 'Bfrtip',
+
+      button:[
+        'copy', 'csv', 'excel', 'print','pdf'
+      ]
+    });
+  });
+</script>
+
+
+{{!-- 
+let col = $('#colors').val()
+console.log('color',col)
+
+  function placePro(proId) {
+    $.ajax({
+
+      url: "/admin/place-product/" + proId,
+      method: "get",
+      data: {
+        id: proId
+      },
+      success: (res) => {
+        alert("response")
+      }
+    })
+  }
+ --}}

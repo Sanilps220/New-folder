@@ -1,0 +1,23 @@
+<div class="col-12 container">
+    <h1>Coupon Manage</h1>
+    <hr>
+<div class="row">
+    <div class="col-6 d-flex " >
+        <form action="/admin/addCoupon" method="post" class="" style="height:25rem">
+            <label for="" class="text-primary my-2">Coupon code:<br>
+            <input type="text" class="form border p-2 "  id="id" name="couponCode"><br>
+        
+            <label for="" class="text-primary my-2">Offer value:</label><br>
+            <input type="text" class="form border p-2" name="Offer"></br>
+            <input type="submit" class="btn my-2 mb-4 text-light"><br>
+        </form>
+    {{#if msg}}
+    <div class="alert">{{msg}}</div>
+    {{/if}}
+    </div>
+
+</div>      
+</div>
+<div class="col-12">
+    <a href="/admin/sent-mail">Sent ></a>
+</div>
