@@ -1,0 +1,177 @@
+
+  	<h1>{{user.id}}</h1>
+    <form action="/profPic" method="post"
+    enctype="multipart/form-data">
+    <div class="user-avatar avatar">
+        <input type="text" name="sani">
+		  <img class="cropped" id="photo" src="/product-images/profile-pic/{{user.id}}.jpg" alt="Maxwell Admin">
+          <input id="file-input" type="file" name="image" accept="image/*" />
+          <label for="file" id="uploadButton" style="display: none;">Change photo</label>
+				</div>
+                <button id="submitPro" type="submit" style="margin-top:260px">click</button>
+  </form>
+    <div class='row'>
+        <div class='col-md-4'>           
+            <div class="box-2">
+                <div class="result"></div>
+            </div>
+        </div>
+        <div class='col-md-4'>
+            <div class="box-2 img-result hide">
+                <!-- result of crop -->
+                <img src="" alt="">
+            </div>
+
+        </div>
+    </div>
+    <!-- input file -->
+    <div class="box">
+        <div class="options hide">
+            <input type="hidden" class="img-w" value="200" min="200" max="1200" />
+        </div>
+        <!-- save btn -->
+    </div>
+    </div>
+    <button class="btn save hide">Save</button>
+    </div>
+    <script>
+        "use strict";
+
+        // vars
+        var result = document.querySelector(".result"),
+            img_result = document.querySelector(".img-result"),
+            img_w = document.querySelector(".img-w"),
+            img_h = document.querySelector(".img-h"),
+            options = document.querySelector(".options"),
+            save = document.querySelector(".save"),
+            upload = document.querySelector("#file-input"),
+            label = document.getElementById("uploadButton"),
+            avatar = document.querySelector('.avatar'),
+            save_change = document.querySelector('.submitPro')
+            cropper = "";
+        // on change show image with crop options
+        upload.addEventListener("change", function(e) {
+            console.log(e)
+            if (e.target.files.length) {
+                // start file reader
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    if (e.target.result) {
+                        // create new image
+                        var img = document.createElement("img");
+                        img.id = "image";
+                        img.width = 400;
+                        img.src = e.target.result;
+
+                        result.innerHTML = ''
+                        // append new image
+                        result.appendChild(img);
+                        // show save btn and options
+                        save.classList.remove("hide");
+                        options.classList.remove("hide");
+                        // init cropper
+                        cropper = new Cropper(img);
+                    }
+                };
+                reader.readAsDataURL(e.target.files[0]);
+            }
+        });
+        // save on click
+        save.addEventListener("click", function(e) {
+
+            var cropped = document.querySelector(".cropped");
+                  // clean result before
+                        result.style.display = "none";
+            e.preventDefault();
+            // get result to data uri
+            var imgSrc = cropper.getCroppedCanvas({
+                width: img_w.value // input value
+            }).toDataURL();
+            // remove hide class of img
+            cropped.classList.remove("hide");
+            img_result.classList.remove("hide");
+
+
+            // show image cropped
+            cropped.src = imgSrc;
+                   
+            console.log(cropped.src)
+            $.ajax({
+                method:'post',
+                url:'/profPic?id:'+imgSrc,
+                succes:(res)=>{
+                    alert('succesfull')
+                }
+            })
+        });
+        label.addEventListener("click",function(e){
+            upload.click()
+        })
+        avatar.addEventListener('mouseenter',function(){
+            label.style.display = 'block';
+        })
+        avatar.addEventListener('mouseleave',function(){
+            label.style.display = 'none'
+        })
+    </script>
+
+<style>  
+ /* .avatar{   
+    border: 2px solid salmon;
+    height: 200px;
+    width: 200px;
+    position: absolute;
+
+
+    overflow: hidden;
+  }
+  .cropped{height: 200px;}
+  #photo{height: 100%;width: 100%; border-radius: 50%; border: 1px solid grey;}
+  #file-input{display: block;}
+ #uploadButton{height: 40px;width:100% ;position: absolute;bottom:0;transform: translate(-50%);text-align: center;
+  left: 50%;background-color: rgb(0, 0, 0, 0.7);
+  color: wheat;line-height: 30px; font-size: 12px;cursor: pointer;} */
+</style>
+{{!-- fggfg --}}
+{{!--
+<div class="container">
+<div class="row gutters">
+<div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12">
+<div class="card h-100">
+	<div class="card-body">
+		<div class="account-settings">
+			<div class="user-profile">
+			
+				<h5 class="user-name"> </h5>
+				<h6 class="user-email"></h6>
+			</div>
+			<div class="about">
+				<h5>About</h5>
+				<p>I'm . Full Stack Developer I enjoy creating user-centric, delightful and human experiences.</p>
+			</div>
+		</div>
+	</div>
+</div></div></div></div>
+
+
+
+
+
+  
+    
+    
+   
+    <div class="entry" style="height: 10rem; width: 10rem;">
+      <a href="/brand-view?id={{this.brand}}">
+      <img src="/images/brand-logo/{{this._id}}.png" alt="Smiling person"  style="height: 10rem; width: 10rem;"/>
+      </a>
+    </div>
+   
+
+   
+
+   <div>
+        <input type="text" id="sugest" onkeyup="sendDatas(this)" >
+<section id="search"></section>
+   </div>
+ --}}

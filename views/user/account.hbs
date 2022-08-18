@@ -1,16 +1,51 @@
 
+
+{{!-- jequery --}}
+{{!-- <section>
+   <div class='row'>
+        <div class='col-md-4'>           
+            <div class="box-2">
+                <div class="result"></div>
+            </div>
+        </div>
+        <div class='col-md-4'>
+            <div class="box-2 img-result hide">
+                <!-- result of crop -->
+                <img class="cropped" src="" alt="">
+				<a href="" class="download btn hide col-2" id="dwnld" >Download</a>
+            </div>
+
+        </div>
+    </div>
+    <!-- input file -->
+    <div class="box">
+        <div class="options hide">
+            <input type="hidden" class="img-w" value="200" min="200" max="1200" />
+			
+        </div>
+        <!-- save btn -->
+    </div>
+    
+    <button class="btn save hide">Save</button>
+   
+	</section> --}}
+	{{!-- end --}}
 <div class="container">
 <div class="row gutters">
 <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12">
-<div class="card h-100">
+<div class="card h-100" style="">
 	<div class="card-body">
 		<div class="account-settings">
 			<div class="user-profile">
-				<div class="user-avatar">
-					<img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Maxwell Admin">
-				</div>
-				<h5 class="user-name">{{user.Uname}} </h5>
-				<h6 class="user-email">{{user.Email}} </h6>
+				 <form action="/profPic" method="post"  enctype="multipart/form-data">
+					<div class="user-avatar avatar">
+					<img class="" id="photo" src="/product-images/profile-pic/{{user._id}}.jpg" alt="Maxwell Admin">
+					<input id="file-input" type="file" name="image" accept="image/*" style="display:none"/>
+          			<label for="file" id="uploadButton" style="diaplay:none">Change photo</label>
+					</div>
+					<button id="submitPro" type="submit" style="" class="btn hide">save photo</button>				
+				</form>  
+				<h5 class="user-name">{{user.Uname}} </h5><h6 class="user-email">{{user.Email}} </h6>				
 			</div>
 			<div class="about">
 				<h5>About</h5>
@@ -20,8 +55,40 @@
 	</div>
 </div>
 </div>
-
-<form action="/updateUserProfile" id="basic-form" method="post" class="col-xl-9 col-lg-9 col-md-12 col-sm-12 col-12">
+<div style="" class="column col-xl-9 col-lg-9 col-md-12 col-sm-12 col-12">
+<div class="col-12">
+	<div class="card">
+		<div class="card-body ">
+			<div class='row'>
+			<div class="col-md-4">
+				 <div class="box-2">
+                	<div class="result"></div>
+            	</div>
+			</div>			
+			<div class="cal-md-4">
+            	<div class="box-2 img-result hide">
+                	<!-- result of crop -->
+                	<img class="cropped" src="" alt="">
+					
+            	</div>				
+			</div>
+			<a href="" class="set btn hide col-2" >Set photo</a>
+			<a href="" class="download btn hide col-2" id="dwnld" >Download</a>
+			</div>
+			  <!-- input file -->
+    <div class="box">
+        <div class="options hide">
+            <input type="hidden" class="img-w" value="200" min="200" max="1200" />
+			
+        </div>
+        <!-- save btn -->
+    </div>
+    
+    <button class="btn save hide">Save</button>
+		</div>
+	</div>
+</div>
+<form action="/updateUserProfile" id="basic-form" method="post" class="col-12">
 
 <div class="card h-100">
 	<div class="card-body">
@@ -103,6 +170,7 @@
 </form>
 </div>
 </div>
+</div>
 {{!-- js valiadtor --}}
 <script>	
 $(document).ready (function () {  
@@ -124,34 +192,14 @@ $(document).ready (function () {
   }) 
 }); 
 </script>
-{{!-- 
-	
-		emailError.innerHtml = "<i class="fa-solid fa-circle-check text-success"></i>"
-		return true;
-	
 
-
-	
-		if(phone === ""){
-			phoneErr.innerHTML = "Contact no Required"
-			return flase;
-		}
-		let mess = phone.value;
-		let requ = 10;
-		let left = requ - mess.length;
-		if(left >0){
-			phoneErr.innerHTML= left +"max 10 digits";
-			return flase;
-		
-
-		phoneError.innerHTML = '<i class="fa-solid fa-circle-check text-success"></i>';
-		return true;
-	} --}}
-
-
-
-
+{{!-- 	#uploadButton{
+	height: 40px;width:100% ;position: absolute;transform: translate(-50%);text-align: center;
+	left: 50%;background-color: rgb(0, 0, 0, 0.7);
+  	color: wheat;line-height: 30px; font-size: 12px;cursor: pointer;}
+ --}}
 <style>
+
     body {
     margin: 0;
     padding-top: 40px;
@@ -219,3 +267,116 @@ $(document).ready (function () {
 
 
 </style>
+
+ <script>
+        "use strict";
+
+        // vars
+        var result = document.querySelector(".result"),
+            img_result = document.querySelector(".img-result"),
+            img_w = document.querySelector(".img-w"),
+            img_h = document.querySelector(".img-h"),
+            options = document.querySelector(".options"),
+            save = document.querySelector(".save"),
+            upload = document.querySelector("#file-input"),
+            label = document.getElementById("uploadButton"),
+            avatar = document.querySelector('.avatar'),
+			dwn = document.querySelector('.download'),
+			update = document.querySelector('#submitPro'),
+            set = document.querySelector(".set"),
+			cropper = "";
+        // on change show image with crop options
+        upload.addEventListener("change", function(e) {
+            if (e.target.files.length) {
+                // start file reader
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    if (e.target.result) {
+                        // create new image
+                        var img = document.createElement("img");
+                        img.id = "image";
+                        img.width = 400;
+                        img.src = e.target.result;
+                  
+                        // append new image
+                        result.appendChild(img);
+                        // show save btn and options
+                        save.classList.remove("hide");
+                        options.classList.remove("hide");
+						dwn.style.display = 'block'
+                        // init cropper
+                        cropper = new Cropper(img);
+                    }
+                };
+                reader.readAsDataURL(e.target.files[0]);
+            }
+        });
+        // save on click
+        save.addEventListener("click", function(e) {
+
+            var cropped = document.querySelector(".cropped");
+                  // clean result before
+                        result.style.display = "none";
+            e.preventDefault();
+            // get result to data uri
+            var imgSrc = cropper.getCroppedCanvas({
+                width: img_w.value // input value
+            }).toDataURL();
+            // remove hide class of img dwnload upload btn
+            cropped.classList.remove("hide");
+            img_result.classList.remove("hide");			
+			update.classList.remove("hide");
+			set.classList.remove("hide");
+
+            // show image cropped
+            cropped.src = imgSrc;                   
+            dwn.classList.remove("hide");
+			dwn.download = "account.jpg";
+			dwn.setAttribute("href",imgSrc)
+			save.style.visibility =("hidden")
+        });
+		
+        label.addEventListener("click",function(e){
+            upload.click()
+        })
+	    set.addEventListener("click",function(e){
+            update.submit()
+        })	
+		dwn.addEventListener("click",function(){
+			//submitPro.click()
+			//dwnld.click()
+			location.reload()
+			
+		})
+        avatar.addEventListener('mouseenter',function(){
+            label.style.display = 'block';
+        })
+        avatar.addEventListener('mouseleave',function(){
+            label.style.display = 'none'
+        })
+    </script>
+	
+	
+	{{!-- 
+	
+		emailError.innerHtml = "<i class="fa-solid fa-circle-check text-success"></i>"
+		return true;
+	
+
+
+	
+		if(phone === ""){
+			phoneErr.innerHTML = "Contact no Required"
+			return flase;
+		}
+		let mess = phone.value;
+		let requ = 10;
+		let left = requ - mess.length;
+		if(left >0){
+			phoneErr.innerHTML= left +"max 10 digits";
+			return flase;
+		
+
+		phoneError.innerHTML = '<i class="fa-solid fa-circle-check text-success"></i>';
+		return true;
+	} --}}

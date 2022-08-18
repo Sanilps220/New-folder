@@ -150,8 +150,6 @@ module.exports = {
                 }
             ]).toArray()
             resolve(cartItems)
-            console.log("items"+cartItems);
-
         })
     },
 
@@ -163,6 +161,17 @@ module.exports = {
                 count = cart.products.length
             }
             resolve(count)
+        })
+    },
+
+    findQuantity:(quan) => {
+        console.log(quan)
+        return new Promise(async(resolve, reject) => {
+        let quant = await db.get().collection(collection.PRODUCT_COLLECTION).findOne({
+            _id:objectId(quan.product)
+        })        
+        resolve(quant)
+        console.log('quantity',quant)
         })
     },
 

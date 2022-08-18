@@ -28,6 +28,15 @@ module.exports={
         })         
     },
 
+    addBrand:(product)=>{
+        return new Promise((resolve,reject)=>{
+            db.get().collection(collection.BRAND_COLLECTION).insertOne({
+                brandName:product
+            })
+            resolve()
+        })
+    },
+
     getVar:(id)=>{
         console.log("updation of variants",id);
         let varId= new objectId()
@@ -43,10 +52,16 @@ module.exports={
         )
         resolve()
     },
-
-    getAllProducts:()=>{
+    getProductManagement:()=>{
         return new Promise(async function(resolve,reject){
             let products =await db.get().collection(collection.PRODUCT_COLLECTION).find().toArray()
+            resolve(products)
+        })
+
+    },
+    getAllProducts:()=>{
+        return new Promise(async function(resolve,reject){
+            let products =await db.get().collection(collection.PRODUCT_COLLECTION).find().limit(8).toArray()
             resolve(products)
         })
 
@@ -108,6 +123,84 @@ module.exports={
         })
     },
 
+    getList:(When)=>{
+        return new Promise(async(resolve,reject)=>{
+            let catList = await db.get().collection(collection.PRODUCT_COLLECTION)
+            .aggregate([
+                {
+                    "$match":{brand:When}
+                },
+                {
+                    "$project":{
+                        //"id":"$_id",
+                        "brand":"$brand",
+                        "price":"$price",
+                        "disco":"$discount",
+                        "name":"$name"
+                    }
+                }
+            ])
+            .toArray()
+            console.log(catList)
+            resolve(catList)
+        })
+    },
+    getSer:(data)=>{
+        return new Promise(async(resolve,reject)=>{
+            let catList = await db.get().collection(collection.PRODUCT_COLLECTION)
+            .find
+                ({
+                    name:{$regex: new RegExp(data+'.*','i')}
+                })
+        
+            .toArray()
+            console.log(catList)
+            resolve(catList)
+        })
+    },
+
+    
+    getCat:(When)=>{
+        return new Promise(async(resolve,reject)=>{
+            let catList = await db.get().collection(collection.PRODUCT_COLLECTION)
+            .aggregate([
+                {
+                    "$match":{category:When}
+                },
+                {
+                    "$project":{
+                        "brand":"$brand"
+
+                    }
+                }
+            ])
+            .toArray()
+            console.log(catList)
+            resolve(catList)
+        })
+    },
+
+    getSearch:(data)=>{
+        return new Promise(async(resolve,reject)=>{
+            let catList = await db.get().collection(collection.PRODUCT_COLLECTION)
+            .find({name:{$regex: new RegExp(data+'.*','i')}})
+            .toArray()
+            console.log(catList)
+            resolve(catList)
+        })
+    },
+
+
+    getDatas:(data)=>{
+        return new Promise(async(resolve,reject)=>{
+            let catList = await db.get().collection(collection.PRODUCT_COLLECTION)
+            .findOne({brand:{$regex: new RegExp(data+'.*','i')}})
+            
+            console.log(catList)
+            resolve(catList)
+        })
+    },
+
     getWishlist:(userId)=>{
         return new Promise(async(resolve,reject)=>{
             let wishList = await db.get().collection(collection.WISHLIST_COLLECTION)
@@ -141,7 +234,7 @@ module.exports={
                 }
             ])
             .toArray()
-            console.log(wishList);
+            console.log("jioojj 123 fhfu  yito",wishList);
             resolve(wishList)
         })
     },

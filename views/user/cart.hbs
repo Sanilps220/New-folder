@@ -29,7 +29,7 @@
       margin-bottom: 60px;
     }
 </style>
-<section class="p">
+<section class="p" style="height: 800px;">
 
   <div class="container">
     <h1>Your Cart</h1> <a href="/" style="float: right;">Back to home Page</a>
@@ -62,9 +62,13 @@
             <span id="{{this.product._id}}">{{this.quantity}} </span>
             <button class="border-white" style="width: 25px; height: 35px;  border-radius: 4px;"
               onClick="changeQua('{{this._id}}','{{this.product._id}}','{{../user}}',1) ">+</button>
+            <p id="{{this.product._id}}msg" style="color: red;"></p>
           </td>
 
-          <td id="price">{{this.product.price}} </td>
+          <td id="price">{{this.product.price}}  </td>
+                 
+          
+          
         </tr>
         {{/each}}
       </tbody>
@@ -73,13 +77,18 @@
 
     <div class="" id="priceOG"></div>
 
-    <div class="col-3 pr-5 border" style="float: right;">
+    <div class="col-3 pr-5 border p-4" style="float: right;">
+      <div class="col-12" style="padding-left: 50%; ">
+       {{#each products}} <p>{{this.product.price}} * {{this.quantity}} {{#if this.product.discount}} - {{this.product.discount}}%  {{/if}}</p>  {{/each}}
+       <hr>
+      </div>
+
       <h3 class=" mr-5 pt-3" style="text-align: center;">Total :<span id="total">{{totalValue}} </span> </h3>
       {{#if cartErr}}
       <p class="p-3">Please add Items
         in your Cart
       </p>
-      <a href="/" class=" mt-3 btn btn-primary" style="float: right;width:100%">Purchese</a>
+      <a href="/" class=" mt-3 btn btn-primary" style="float: right;width:100%">Purchese </a>
       {{else}}
       <a href="/place-order" class=" mt-3 btn btn-primary" style="float: right;width:100%">Place order</a>
       {{/if}}
@@ -116,7 +125,10 @@
       },
       method: 'post',
       success: (response) => {
-
+        if(response.err){          
+           document.getElementById(proId+'msg').innerHTML = response.status
+        }else{
+           document.getElementById(proId+'msg').innerHTML = ' '
         if (response.removeProduct) {
           alert("product removed")
           location.reload()
@@ -124,7 +136,7 @@
           document.getElementById(proId).innerHTML = quantity + count
           document.getElementById('total').innerHTML = response.total
         }
-
+        }
       }
     })
   }

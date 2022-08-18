@@ -9,25 +9,19 @@ const userController = require('../Controller/user-controller')
 var paypal = require('paypal-rest-sdk');
 const { route } = require('./admin');
 var bcrypt = require('bcrypt')
+require("dotenv").config()
+var fs = require('fs')
 
 paypal.configure({
   mode: "sandbox", //sandbox or live
-  client_id:
-    //"AXazMvBms7A3vEqxt8W_6xrLgNs_d1yvk-cKWA_JJKusjzsI9DhzFTSTyAQi3onNvqeIKC6q494nIVR-",
-    "Ac50voE8lHh3bd1d6C3p4fGRQ1-Gar6Nl6naDmwJCNUGX9U-mbiJETOLdU0LAIi783NmE7un0Ljlk7kt",
-  client_secret:
-    //"EEBCE6_5bRVe6XDFQnUdMM8wvxyHySwKJvLGvxTuEfwEwISXe4ADYtWmU6Bo50lpwDF-zebudqx-FmbX",
-    "EHSXVo-RmfppUTcqi5lKt3ozmtq-gDQbvzMmti4RiaUN8soN-arIDNQhQb39E4aGv4V0XU1TSvBtxeKt",
+  client_id: process.env.client_id,
+  client_secret: process.env.client_secret,
 });
 
-/*twilio */
-//const accountSid = process.env.TWILIO_ACCSID;
-//const authToken = process.env.TWILIO_AUTHTOKEN;
-//const serviceSid = process.env.TWILIO_SERVICESID;
-var sid = "ACdb0a048a93142162b8cda3cd7f95e78b"
-var auth_token = "c1e7d82853e8bab8119e867811f687ee"
-var serviceSid = 'VA7dfd9297e4481790522e281a467dd13f'
-
+var sid = process.env.sid
+var auth_token = process.env.auth_token
+var serviceSid = process.env.serviceSid
+console.log('service Sid',serviceSid)
 const twilio = require("twilio")(sid, auth_token);
 /* middelware function */
 const verifyLogin = (req, res, next) => {
@@ -44,12 +38,40 @@ router.get('/', async function (req, res, next) {
   if (req.session.user) {
     cartCount = await userHelpers.getCartCount(req.session.user._id)
   }
+  let men = await productHelpers.getCat("Men")
+  let women = await productHelpers.getCat("Women")
   offerProducs = await productHelpers.getOfferProducts()
   console.log(offerProducs);
   productHelpers.getAllProducts().then((products) => {
-    res.render('user/view-products', { user, products, cartCount, offerProducs });
+    res.render('user/view-products', { user, products, cartCount, offerProducs , men ,women ,sub:true});
   });
 });
+
+router.get('/cat',(req,res)=>{
+  productHelpers.getCat().then((cat)=>{
+    res.json({cat})
+  })
+})
+
+router.post('/searchPro',(req,res)=>{
+  let payload = req.body.payload;
+  console.log('paylad',payload);
+   productHelpers.getSearch(payload).then((cat)=>{
+    res.json({payload:cat})
+  })
+})
+
+
+router.get('/searchDatas',(req,res)=>{
+
+  let payload = req.query.search;
+  console.log('paylad',req.query);
+   productHelpers.getDatas(payload).then((cat)=>{
+    res.json({payload:cat})
+  })
+}) 
+
+
 /*  login page. */
 router.get('/login', (req, res ) => {
   if (req.session.loggedIn) {
@@ -59,6 +81,47 @@ router.get('/login', (req, res ) => {
     req.session.loggedInErr = null
   }
 });
+
+router.get('/local/:id',async(req, res ) => {  
+  console.log(req.params.id);
+  let men = await productHelpers.getCat("Men")
+  let women = await productHelpers.getCat("Women")
+  let products = await productHelpers.getList(req.params.id)
+  res.render('user/view-pro-by-cat',{user:req.session.user,products,men,women,sub:true}) 
+})
+
+router.get('/localSer/:id',async(req, res ) => {  
+  console.log(req.params.id);
+  let men = await productHelpers.getCat("Men")
+  let women = await productHelpers.getCat("Women")
+  let products = await productHelpers.getSer(req.params.id)
+  res.render('user/view-pro-by-cat',{user:req.session.user,products,men,women,sub:true}) 
+})
+
+router.get('/lo',  (req, res ) => {  
+  productHelpers.getAllProducts().then((newArrivels) => {
+  res.render('user/index',{newArrivels,user:{id:'62e67b447f15ef388b5a8df8'} })
+  })
+})
+
+router.post('/profPic/',(req,res)=>{
+  console.log(req.query.id); 
+  console.log('files',req.files);
+  let image = req.files?.image;
+  let ID = req.session.user._id
+  console.log("post method", req.files.image);
+  fs.unlink(`./public/product-images/profile-pic/${ID}.jpg`,
+  (err,data)=>{    
+    image.mv('./public/product-images/profile-pic/62e67b447f15ef388b5a8df8.jpg')
+    if(err) console.log(err);   
+    console.log('pend',data) 
+    res.send({staus:true}) 
+ 
+  }
+  )
+
+})
+
 
 router.post('/phone-verify',(req,res,next)=>{
   
@@ -148,8 +211,8 @@ router.post('/login', (req, res) => {
 })
 /*  signup page. */
 let referel;
-router.get('/signup', async (req, res) => {
-  let referel = await req.query.referel;
+router.get('/signup', (req, res) => {  
+  let referel =  req.query.referel;  
   if (!req.session?.loggedIn) {
     if(req.session.mesg){
     let msg = req.session.mesg
@@ -164,7 +227,6 @@ router.get('/signup', async (req, res) => {
 })    
 //===== =============================== signup ==============================
 router.post('/signup',async(req, res) => {   
-  
   console.log(req.body);
   let val = req.body ;
   if(val.Uname == '' || val.Email === '@gmail.com' || val.phone == '' || val.Pass == ''){
@@ -204,7 +266,7 @@ router.get('/signupOtp',async(req,res)=>{
   phoneNumber = req.query.phoneNumber
   otpNumber = req.query.otpnumber
   
-  twilio.verify.services('VA3704506443846f0438c82a42822b0fa3')
+  twilio.verify.services(process.env.serviceSid2)
     .verificationChecks.create({
       to: "+91" + phoneNumber,
       code: otpNumber,
@@ -261,8 +323,11 @@ router.get('/add-to-cart/:id',verifyLogin,   (req, res) => {
   }) 
 })
 
-router.post('/change-product-quantity', (req, res, next) => {
-  console.log("quanttiy :",req.body.product);
+router.post('/change-product-quantity',async(req, res, next) => {
+  let quantity = await userHelpers.findQuantity(req.body)
+  let itemq = quantity.quantity
+  let cart = req.body.quantity
+  if(cart <= itemq || req.body.count == -1 ){
   userHelpers.changeProductQantity(req.body).then(async (response) => {
     console.log(req.body.quantity);
     if (req.body.count == -1 && req.body.quantity == 1) {
@@ -270,8 +335,12 @@ router.post('/change-product-quantity', (req, res, next) => {
     } else {
       response.total = await userHelpers.getTotalAmount(req.body.user)
     }
+  
     res.json(response) /* resopnse data convert to json then send to response */
   }) 
+}else{
+  res.json({err:true,status:'Out of stock'})
+}
 })
 
 router.get('/place-order',verifyLogin, async function (req, res) {

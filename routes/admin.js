@@ -5,12 +5,15 @@ var fs = require('fs')
 var productHelpers = require('../Helpers/product-helpers')
 var adminHelpers = require('../Helpers/admin-helpers')
 var userHelpers = require('../Helpers/user-helpers');
+const nodemailer = require("nodemailer");
+const env = require("dotenv").config()
 const { verify } = require('crypto');
 const admin={
   name:"admin",
   pass:123
 }
 
+console.log(env.parsed.SENT_MAIL) // remove this after you've confirmed it working
 const verifyLogin=(req,res,next)=>{
   //let admin = adminHelpers.verify()
   if(req.session.admin ){
@@ -70,7 +73,7 @@ router.get('/add-product',verifyLogin,(req,res)=>{
 
 router.get('/view-products', verifyLogin, function(req, res, next) {
   var admin =req.session.admin
-  productHelpers.getAllProducts().then((products)=>{
+  productHelpers.getProductManagement().then((products)=>{
     console.log(products);     
     res.render('admin/view-products',{admin,products})
   })
@@ -94,6 +97,13 @@ router.post('/add-product',(req,res)=>{
     })
     
   })
+})
+
+router.post('/add-brand',(req,res)=>{
+  console.log(req.body);
+  productHelpers.addBrand(req.body.brand).then(()=>{
+  res.redirect('/admin/add-product')
+})
 })
 
 router.get('/edit-product/:id',async(req,res)=>{
@@ -199,91 +209,20 @@ router.get("/orders",verifyLogin,async(req,res)=>{
 })
 
 router.post('/place-product/:id',(req,res)=>{
-  console.log(req.params);
-  productHelpers.placeOrders(req.params.id,req.body).then(()=>{
-    res.redirect('/admin/orders')
-  })
+  console.log(req.body.status); 
+if(req.body.status == "Delivered"){
+    
 
-})
-
-router.get('/userDetails',verifyLogin,(req,res)=>{
-  userHelpers.getUser().then((resolve)=>{
-    res.render('admin/userDetails',{users:resolve, admin:req.session.admin})
-  })
-})
-
-router.post("/block-user",verifyLogin,(req,res)=>{
-  adminHelpers.blockUser(req.body.id).then((resp)=>{
-    console.log(resp);
-    if (resp){
-      res.redirect('/admin/userDetails')
-    }else{
-    res.json({status:false})
-    }
-  })
-})
-
-router.get('/remove-user/:id',verifyLogin,(req,res)=>{
-  adminHelpers.removeUser(req.params.id).then((resp)=>{
-    res.redirect('/admin/userDetails')
-  })
-})
-
-router.post("/unblock-user",(req,res)=>{
-  adminHelpers.unblockUser(req.body.id).then((resp)=>{
-    console.log(resp);
-    if (resp){
-      res.redirect('/admin/userDetails')
-    }else{
-    res.json({status:false})
-    }
-  })
-})
-
-router.get('/view-pass/:id',verifyLogin,(req,res)=>{
-  adminHelpers.viewPass(req.params.id).then((resp)=>{
-    res.send({pass})
-  })
-})
-
-router.get("/cancelOrder/:id",(req,res)=>{
-console.log('para',req.params);
-adminHelpers.cancelOrder(req.params.id)
-res.redirect('/admin/orders')
-})
-
-router.get('/coupon',verifyLogin,(req,res)=>{
-  if(req.session.mesg){
-    let msg =req.session.mesg
-    console.log(msg);
-    res.render('admin/coupon',{admin:true,msg})
-    req.session.mesg = false
-  }else{
-  res.render('admin/coupon',{admin:true})
-  }
-})
-
-router.post('/addCoupon',async(req,res)=>{
-  console.log(req.body);
-  await adminHelpers.addCoupon(req.body)
-  req.session.mesg = "Coupon added success.."
-  res.redirect('/admin/coupon')
-})
-
-
-router.get('/sent-mail',(req,res)=>{
-
-const nodemailer = require("nodemailer");
 
 // async..await is not allowed in global scope, must use a wrapper
 
-  let transporter = nodemailer.createTransport({
+    let transporter = nodemailer.createTransport({
     service:"gmail",
     auth: {
       user: "sanilps220@gmail.com", // generated ethereal user
-      pass: "ibohwlcptpnaitoj", // generated ethereal password
+      pass: env.parsed.SENT_MAIL, // generated ethereal password
     },
-  });
+    });
   
     transporter.sendMail({   // send mail with defined transport object
     from:"sanilps220@gmail.com" , // 👻sender address
@@ -421,7 +360,7 @@ const nodemailer = require("nodemailer");
                           style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size:48px; font-weight: 800; line-height: 48px;"
                           class="mobile-center">
                           <div class="text-center">
-                            <span style="color: #ff9500;">K <span style="color: #000;">IDDIE</span> </span>
+                            <span style="color: #ff9500;">S <span style="color: #000;">HOPIY</span> </span>
                           </div>
                         </td>
                       </tr>
@@ -440,7 +379,7 @@ const nodemailer = require("nodemailer");
                         <img src="http://healthplang.com/App_Themes/GHP/images/icon-check-mark.png" width="125" height="120"
                           style="display: block; border: 0px;" /><br>
                         <h2 style="font-size: 30px; font-weight: 800; line-height: 36px; color: #333333; margin: 0;">
-                          Hey  buddey,Your order has been added Thank You For Your Order!
+                          Hey  buddey,Your order has been ready to out of delivering Thank You For Your Order!
                         </h2>
                       </td> </tr>
                    
@@ -468,15 +407,78 @@ const nodemailer = require("nodemailer");
     
         
        
-       //${userEmail[0].deliveryDetails.name}${userEmail[0].products[0].status}     
-      
+       //${userEmail[0].deliveryDetails.name}${userEmail[0].products[0].status}       
      // html body
   });
-  req.session.mesg ="Email send success"
-  res.redirect('/admin/coupon')
+}
+  productHelpers.placeOrders(req.params.id,req.body).then(()=>{
+    res.redirect('/admin/orders')
+  })
+
 })
 
+router.get('/userDetails',verifyLogin,(req,res)=>{
+  userHelpers.getUser().then((resolve)=>{
+    res.render('admin/userDetails',{users:resolve, admin:req.session.admin})
+  })
+})
 
+router.post("/block-user",verifyLogin,(req,res)=>{
+  adminHelpers.blockUser(req.body.id).then((resp)=>{
+    console.log(resp);
+    if (resp){
+      res.redirect('/admin/userDetails')
+    }else{
+    res.json({status:false})
+    }
+  })
+})
+
+router.get('/remove-user/:id',verifyLogin,(req,res)=>{
+  adminHelpers.removeUser(req.params.id).then((resp)=>{
+    res.redirect('/admin/userDetails')
+  })
+})
+
+router.post("/unblock-user",(req,res)=>{
+  adminHelpers.unblockUser(req.body.id).then((resp)=>{
+    console.log(resp);
+    if (resp){
+      res.redirect('/admin/userDetails')
+    }else{
+    res.json({status:false})
+    }
+  })
+})
+
+router.get('/view-pass/:id',verifyLogin,(req,res)=>{
+  adminHelpers.viewPass(req.params.id).then((resp)=>{
+    res.send({pass})
+  })
+})
+
+router.get("/cancelOrder/:id",(req,res)=>{
+console.log('para',req.params);
+adminHelpers.cancelOrder(req.params.id)
+res.redirect('/admin/orders')
+})
+
+router.get('/coupon',verifyLogin,(req,res)=>{
+  if(req.session.mesg){
+    let msg =req.session.mesg
+    res.render('admin/coupon',{admin:true,msg})
+    req.session.mesg = false
+  }else{
+  res.render('admin/coupon',{admin:true})
+  }
+})
+
+router.post('/addCoupon',async(req,res)=>{
+  console.log(req.body);
+  await adminHelpers.addCoupon(req.body)
+  req.session.mesg = "Coupon added success.."
+  res.redirect('/admin/coupon')
+})
 
 router.get('/salesReport',verifyLogin,async(req,res)=>{
   //verifyLogin, let fromDate = new Date(req.query.fromDate)

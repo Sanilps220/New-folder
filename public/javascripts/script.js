@@ -1,4 +1,3 @@
-
         function addToCart(proId){
             $.ajax({
                 url:'/add-to-cart/'+proId,
@@ -25,7 +24,81 @@
             })
         }
         
+        function sendDatas(e){
+            let search= document.getElementById('search')
+            let searchValue = document.getElementById('sugest')
+            let searchResult = document.getElementById('sugest')
+            val=e.value
+            console.log('kk',val)
+            $.ajax({
+                url:'/searchDatas',
+                method:'get',
+                data:{search:val},
+                success:(resp)=>{
+                    console.log(resp)
+                    let search = resp.payload
+                    search.innerHTML = `<a> ${search.brand}</a>`
+                }
+            })
+        }
+
+        function sendData(e){
+           let searchValue =  document.getElementById('join')
+           console.log(searchValue)
+           let searchResult = document.getElementById('searchResult')
+           let match = e.value.match(/^[a-zA-Z]*/)
+           let match2 = e.value.match(/\s*/)
+           
+           console.log('mat 2',match2)
+           
+           
+           if(match2[0] === e.value){
+            searchResult.innerHTML=''
+            return
+           }
+           if(match[0] === e.value){ 
+            val = e.value
+                      $.ajax({
+                url: '/searchPro',
+                method:'post',
+                data: {payload:val},
+                success:(response)=>{
+                    console.log(response)
+                    let payload = response.payload
+                    searchResult.innerHTML = ''
+            if(payload.length < 1){
+                searchResult.innerHTML = '<p>Sorry, Nothing Found </p>'
+                return;
+            }
+            payload.forEach((item,length)=>{               
+                searchResult.innerHTML += `<div><a href="/localSer/${item.name}"> <p style="text-decoration: none;" > ${item.name} </p></a></div>`
+            })
+                }
+                })
+            
+
+            return
+           }
+        }
        
+        function getProductDetails(proId){
+        $.ajax({
+            url:'/local?id='+proId ,
+            method:'get',
+            // success:(response)=>{
+            //     console.log(response)
+            //     if(response){
+            //         window.location.replace('/local',{products:response})
+            //     }href="\local\'${item._id}'"
+            //}onclick="getProductDetails('${item._id}')
+         success:(data)=>{
+            console.log('data',data)
+            alert("success")
+            window.location.replace('/local')
+         }
+        })
+        }
+
        // function editUser(userId){
     //         let val = document.getElementById('sts')
     //         console.log(val)

@@ -1,5 +1,5 @@
 body  
-{  
+{   text-decoration: none;
     margin: 0;  
     padding: 0;  
     background-color:#96e0e2;  
@@ -68,7 +68,7 @@ text-align: center;
     font-family: montserrat;
     background: linear-gradient(120deg,#96e0e2,#8e44ad);
     overflow: hidden;
-  
+    background-repeat: no-repeat;
     height: 100vh;
 }
 .center{
@@ -544,4 +544,40 @@ footer .colfofo .bot{
   font-family: "Segoe UI",Arial,sans-serif;
   font-weight: 300;
   margin: 10px 0;
+}
+
+@media only screen and (max-width: 600px){
+  .c-fa .c-fac{   
+    height: 35rem;
+  }
+  .c-fa .c-fac .card .c-car{    
+    height: 300px;
+  }
+  .c-fa .c-fac .card .tick{
+    flex-direction: column;
+    height: 12px;
+  }
+  .c-fa .c-fac .c-lg {  
+   /* display: none; */
+   display: block;
+  padding-top: 42px; 
+  
+  }
+  .c-fa .c-fac .c-lg .col-6 button{  
+    padding: 0;    
+    background-color: #fdfdff;
+    border-radius: 0;
+    border:solid 1px rgb(219, 212, 212);
+    border-top: 0;
+    border-collapse: collapse;
+  }
+  .c-fa .c-fac .c-lg .col-6 a{
+    padding: 0;
+    background-color: #fdfdff;
+    border-radius: 0;
+    border:solid 1px rgb(219, 212, 212);
+    border-top: 0;
+    border-collapse: collapse;
+  }
+  
 }

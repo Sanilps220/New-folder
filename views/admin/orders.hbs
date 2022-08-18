@@ -11,8 +11,8 @@
         <tr>
           <th scope="col">Date</th>
           <th scope="col">Address</th>
-          <th scope="col">Pin code</th>
-          <th scope="col">Mobile</th>
+          
+          
 
           <th scope="col">Payment</th>
           <th scope="col">Status</th>
@@ -25,9 +25,9 @@
         {{#each orders}}
         <tr>
           <td scope="row" style="font-size: small;">{{this.orderObj.date}}</td>
-          <td> {{this.orderObj.deliveryDetails.order}}</td>
-          <td>{{this.orderObj.deliveryDetails.pincode}} </td>
-          <td>{{this.orderObj.deliveryDetails.mobile}} </td>
+          <td> {{this.orderObj.deliveryDetails.order}}
+         <p class="small">pin:{{this.orderObj.deliveryDetails.pincode}} 
+          ph:{{this.orderObj.deliveryDetails.mobile}} </p> </td>
 
           <td>{{this.orderObj.PaymentMethod}} </td>
           <td id="colors">{{this.orderObj.status}} </td>

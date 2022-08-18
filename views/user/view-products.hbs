@@ -13,7 +13,7 @@
                                 style="color:rgb(107, 45, 45) ;flex: 0 0 66%;display: contents;max-width: 86%;">
                                 <h2>Fancy Jewelery</h2>
                             </div>
-                            <div class="a-b col-md-4 "><a href=". ." class="card btn btn-br"
+                            <div class="a-b col-md-4 "> <a href="/localSer/angels jewels" class="card btn btn-br"
                                     style="display: flex;color:rgb(54, 49, 49); border-radius: 2px; font-weight: 500;">Shop
                                     now</a></div>
                         </div>
@@ -45,7 +45,7 @@
 
 </section>
 
-<div class="tcls">
+<div class="tcls" >
     <div class="" style="border-top: 1px solid #eaeaead0;">
         <div style="border-bottom: 1px solid #eaeaead0; padding: 15px 20px;">
 
@@ -53,12 +53,12 @@
 
         </div>
 
-        <div class="wwrapper">
+        <div class="wwrapper" style="background-color: #ddd ;">
             {{#each offerProducs}}
             <div class="item">
-                <a href="">
+             
                     <div style="margin-top: 40px;">
-                             <img style="width: 120px; height:150px;" src="/product-images/{{this._id}}.jpg" alt="" />                        
+                           <a href="/proView/{{this._id}}">  <img style="width: 120px; height:150px;" src="/product-images/{{this._id}}.jpg" alt="" />     </a>                      
                         <div style="position: relative;">
                             <div
                                 style="display: flex; position: absolute; width:220px ;justify-content: center;text-align: center; line-height: 35px;">
@@ -67,47 +67,19 @@
                                     <div  style="font-weight: 600; color: #e97a1e;font-size: small; ">{{this.discount}}% discount</div>
                                 </div>
                                 <div style="text-align: center; line-height: 65px; padding:8px">
-                                    <button onclick="addToCart('{{this._id}}')" class="btn border-dark"
-                                        style="font-size: small; padding: 2px">
+                                    <button class="btn border-dark col-12" onclick="addToCart('{{this._id}}')" 
+                                        style="font-size: small; padding: 8px">
                                         Add
                                     </button>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </a>
+                
             </div>
             {{/each}}
-            <div class="item">
-                <a href="">
-                    
-                    <div style="margin-top: 40px;">
-                        <img
-                            src="https://rukminim1.flixcart.com/image/150/150/l4d2ljk0/hair-oil/q/1/6/32-2-x-faster-beard-growth-oil-with-100-natural-ingredients-original-imagf9wmm3hzrgst.jpeg?q=70">
-                    </div>
-                    <div
-                        style="display: flex; position: absolute; width:220px ;justify-content: center;text-align: center; line-height: 35px;">
-                        <div style="text-align: center;">
-                            <div style="font-size: small; ">Mens Beard Oil</div>
-                            <div style="font-size: small; ">10% discount</div>
-                        </div>
-                        <div style="text-align: center; line-height: 65px; padding:8px">
-                            <button onclick="addToCart('{{this._id}}')" class="btn border-dark"
-                                style="font-size: small; padding: 2px">
-                                Add
-                            </button>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <div class="item">box2<i class="fa-solid fa-cart-plus"></i></div>
-            <div class="item">box4<i class="fa-light fa-cart-plus"></i></div>
-            <div class="item">box5 <i class="fa-brands fa-cc-visa"></i></div>
-            <div class="item">box6</div>
-
+                  
         </div>
-
-
     </div>
 </div>
 
@@ -118,23 +90,22 @@
 
 
 
-
-<section style="background-color: beige;" class="mt-4">
+<section style="background-color: rgba(243, 235, 235, 0.336);" class="mt-4 c-fa">
     <div class="conatiner ">
         <div class="row" style="margin-right: 0; margin-left: 15px;">
             {{#each products}}
             
-            <div class="col-lg-3 col-md-4 col-sm-6 mt-4 hov"> 
+            <div class="col-lg-3 col-md-4 col-sm-6 col-6 hov mt-4 c-fac"> 
                                
                 <a href="/proView/{{this._id}}" style="color: #333;text-decoration: none;">
                     <div class="card"  style=" height: 25rem;">                         
-                        <div class="card" style="width: 100%;height: 90%; ">
+                        <div class="card c-car" style="width: 100%;height: 90%; ">
                             <img class="card-img-top" style=" height:25rem;"
                                 src="/product-images/{{this._id}}.jpg" alt="Card image cap"/>
                         </div>
                         <div class="d-flex tick"
                             style="background-color: rgba(255, 255, 255, 0.658);border-bottom:solid 0px rgb(219, 212, 212);">
-                            <div class="card-body " style="padding-top: 0px; z-index: 1;background-color: rgba(255, 255, 255, 0.658);">
+                            <div class="card-body" style="padding-top: 0px; z-index: 1;background-color: rgba(255, 255, 255, 0.658);">
                                  <h5 class="title" style="font-size: 18px;">{{this.brand}} </h5>
                                 {{!-- <p class="card-text" style="font-size: 15px;">{{this.details}}</p> --}}
                             </div>
@@ -143,7 +114,7 @@
                                 <li class="list-group-item">Dapibus ac facilisis in</li>
                                 <li class="list-group-item">Vestibulum at eros</li>
                             </ul> --}}
-                            <div class="card-body" style="padding-top: 0px;background-color: rgba(255, 255, 255, 0.658);z-index: 1;">
+                            <div class="card-body "  style="padding-top: 0px;background-color: rgba(255, 255, 255, 0.658);z-index: 1;">
                                 <p class="card-text" style="font-weight: 600; color: #e97a1e;"
                                  >₹{{this.price}}</p>
                             </div>
@@ -151,11 +122,16 @@
                         
                     </div>
                </a>
-               <div id="bton" class="border-top-0" style="height: 45px;border:solid 1px rgb(219, 212, 212);background-color: rgba(255, 255, 255, 0.658);z-index: 3;">
-           <button id="bt"  style="z-index: 10;color: rgb(15, 13, 13);" onclick="addToCart('{{this._id}}')" class="btn btn-outline-light">ADD TO CART</button>
-           <a href="/wishlist/{{this._id}}"  id="tb" class="btn btn-outline-light" style="color:black;">WISH LIST</a>
-        
-          </div>
+              <div id="bton" class="border-top-0 d-flex col-12 c-lg" style="height: 45px;border:solid 1px rgb(219, 212, 212);background-color: rgba(255, 255, 255, 0.658);z-index: 3;">
+                       
+                       <div class="col-6">
+                        <button id="bt" style="z-index: 10;color: rgb(15, 13, 13); text-align: center;" onclick="addToCart('{{this._id}}')"
+                            class="btn btn-outline-light  col-12"><nbsp>ADD TO CART</nbsp></button>
+                        </div>
+                       <div class="col-6">
+                        <a href="/wishlist/{{this._id}}" id="tb" class="btn btn-outline-light col-12" style="color:black;">WISH LIST</a>
+                       </div>
+              </div>
         </div>    
     {{/each}}
     </div>

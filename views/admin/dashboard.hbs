@@ -44,6 +44,7 @@
         </div>
    </div>
 </div>
+
 <div class="text-center">
     <input type="text" name="" id="topwear" value="{{topwear}}" hidden>
     <input type="text" name="" value="{{shirt}}" id="shirt" hidden>
@@ -73,24 +74,25 @@
     }
 </style>
 
+<script>
 
-
- {{!--    let count = document.getElementById("0").value
+    let count = document.getElementById("0").value
     let count1 = document.getElementById("1").value
     let count2 = document.getElementById("2").value
     let count3 = document.getElementById("3").value
     let count4 = document.getElementById("4").value
     let count5 = document.getElementById("5").value
     let count6 = document.getElementById("6").value
+    let count7 = document.getElementById("7").value
 
     const ctx4 = document.getElementById('myChart4').getContext('2d');
     const myChart4 = new Chart(ctx4, {
         type: 'bar',
         data: {
-            labels: ['Benetton', 'Hamilton Deodorant', 'Us polo', 'Woodland', 'Black Jacket', 'Golden', 'JACK & JONES', 'Denim jeans'],
+            labels: ['Graphic Printed', 'sharara set', 'Mens new', 'Mens Casual', 'Black Jacket', 'Deodrant', 'D-fashion', 'Printed Men'],
             datasets: [{
                 label: 'Products_status',
-                data: [count, count1, count2, count3.count4, count5, count6, 30,],
+                data: [count, count1, count2, count3 ,count4, count5, count6, count7,],
                 backgroundColor: [
                     'rgba(255, 99, 132, 0.2)',
                     'rgba(54, 162, 235, 0.2)',
@@ -117,8 +119,8 @@
                 }
             }
         }
-    }); --}}
-<script>
+    }); 
+
     let topwear = document.getElementById("topwear").value
     let shirt = document.getElementById("shirt").value
     let men = document.getElementById("men").value

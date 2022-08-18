@@ -14,9 +14,9 @@
     height: 280px;
     line-height: 30px;
     text-align: center;
-    background-color: #ddd;
+    background-color: rgb(255, 254, 254);
     margin-right: 2px;
-
+    margin: 8px;
 }
 .style-otp {    
     font-family: 'Montserrat' , sans-serif;

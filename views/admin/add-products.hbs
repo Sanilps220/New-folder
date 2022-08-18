@@ -17,7 +17,7 @@
         <input type="number" id="value" class="form-control" name="price">
       </div>
       <div style="margin-left: 18px; width: 50%">
-        <label for="">Discount</label>
+        <label for="">Discount in %</label>
         <input type="number" id="dis" value="0" class="form-control" name="discount">
 
       </div>
@@ -74,6 +74,17 @@
       if you completed press Done.
     </p>
     {{/if}}
+  </form>
+  <br>
+  <br>
+  <hr>
+  <br>
+  <form action="/admin/add-brand" id="form" method="post" enctype="multipart/form-data">
+  <p>Add a new Brand fill and add</p>
+   <div style="width: 50%; padding-left: 20px;">
+          <label for="exampleInputPassword1">Brand :</label>
+          <input type="text" class="form-control" id="qua" name="brand" required>
+     <button type="submit" class="btn btn-primary mt-2" >Add</button>
   </form>
 </div>
 <script>
