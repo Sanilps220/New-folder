@@ -35,8 +35,9 @@ router.get('/', verifyLogin,async function(req, res, next) {
   let men =await adminHelpers.getGendCount("Men")
   let women =await adminHelpers.getGendCount("Women")
   let stockOut = await adminHelpers.getStockOut()
+  let revenue =  await adminHelpers.getRevanue()
   console.log(users);
-  res.render('admin/dashboard',{admin,users,active,products,order,topwear,men,women,shirt,stockOut})
+  res.render('admin/dashboard',{admin,users,active,products,revenue,order,topwear,men,women,shirt,stockOut})
 });
 
 
@@ -211,9 +212,6 @@ router.get("/orders",verifyLogin,async(req,res)=>{
 router.post('/place-product/:id',(req,res)=>{
   console.log(req.body.status); 
 if(req.body.status == "Delivered"){
-    
-
-
 // async..await is not allowed in global scope, must use a wrapper
 
     let transporter = nodemailer.createTransport({
@@ -419,6 +417,7 @@ if(req.body.status == "Delivered"){
 
 router.get('/userDetails',verifyLogin,(req,res)=>{
   userHelpers.getUser().then((resolve)=>{
+    console.log(resolve);
     res.render('admin/userDetails',{users:resolve, admin:req.session.admin})
   })
 })

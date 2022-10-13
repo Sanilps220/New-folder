@@ -1,3 +1,4 @@
+
 <section class="main" style="position: relative;padding-bottom: 10px;">
     <div class="cono " style="width: 100%;overflow: hidden;">
         <div class="row" style="margin-left:0;margin-right: 0;">
@@ -30,7 +31,7 @@
                             <div class="col-md-8" style="color:#fff ;flex: 0 0 66%;display: contents;max-width: 86%;">
                                 <h2>Mens Clothings</h2>
                             </div>
-                            <div class="col-md-4"><a href=". ." class="card btn btn-br"
+                            <div class="col-md-4"><a href="/local/mens" class="card btn btn-br"
                                     style="display: flex;color:rgb(54, 49, 49); border-radius: 2px; font-weight: 500;">Shop
                                     now</a></div>
                         </div>
@@ -92,6 +93,10 @@
 
 <section style="background-color: rgba(243, 235, 235, 0.336);" class="mt-4 c-fa">
     <div class="conatiner ">
+        <div class="row">
+        <h1 style="padding-left: 35px;">Mens fashion | upto 10% - 30 % off 
+            <a href="/local/mens" style="text-decoration: none;color: rgb(77, 77, 223);">see all offer</a>
+        </h1>
         <div class="row" style="margin-right: 0; margin-left: 15px;">
             {{#each products}}
             
@@ -129,11 +134,63 @@
                             class="btn btn-outline-light  col-12"><nbsp>ADD TO CART</nbsp></button>
                         </div>
                        <div class="col-6">
-                        <a href="/wishlist/{{this._id}}" id="tb" class="btn btn-outline-light col-12" style="color:black;">WISH LIST</a>
+                        
+                        <a onclick="wishlist('{{this._id}}')" id="tb" class="btn btn-outline-light col-12" style="color:black;">WISH LIST</a>
+                       </div>
+              </div>
+        </div> 
+         
+    {{/each}} <div class="hidden href="/wishlist/{{this._id}}" "></div> 
+    </div>
+    </div><div class="" style="position: absolute;" id="alerts"></div>
+    <!-- Women -->
+      <div class="row p-4">
+        <h1 style="padding-left: 35px;">Womens fashion | upto 10% - 30 % off 
+            <a href="/local/women" style="text-decoration: none;color: rgb(77, 77, 223);">see all offer</a>
+        </h1>
+        <div class="row" style="margin-right: 0; margin-left: 15px;">
+            {{#each cwProducts}}
+            
+            <div class="col-lg-3 col-md-4 col-sm-6 col-6 hov mt-4 c-fac"> 
+                               
+                <a href="/proView/{{this._id}}" style="color: #333;text-decoration: none;">
+                    <div class="card"  style=" height: 25rem;">                         
+                        <div class="card c-car" style="width: 100%;height: 90%; ">
+                            <img class="card-img-top" style=" height:25rem;"
+                                src="/product-images/{{this._id}}.jpg" alt="Card image cap"/>
+                        </div>
+                        <div class="d-flex tick"
+                            style="background-color: rgba(255, 255, 255, 0.658);border-bottom:solid 0px rgb(219, 212, 212);">
+                            <div class="card-body" style="padding-top: 0px; z-index: 1;background-color: rgba(255, 255, 255, 0.658);">
+                                 <h5 class="title" style="font-size: 18px;">{{this.brand}} </h5>
+                                {{!-- <p class="card-text" style="font-size: 15px;">{{this.details}}</p> --}}
+                            </div>
+                            {{!-- <ul class="list-group list-group-flush">
+                                <li class="list-group-item">Cras justo odio</li>
+                                <li class="list-group-item">Dapibus ac facilisis in</li>
+                                <li class="list-group-item">Vestibulum at eros</li>
+                            </ul> --}}
+                            <div class="card-body "  style="padding-top: 0px;background-color: rgba(255, 255, 255, 0.658);z-index: 1;">
+                                <p class="card-text" style="font-weight: 600; color: #e97a1e;"
+                                 >₹{{this.price}}</p>
+                            </div>
+                        </div>  
+                        
+                    </div>
+               </a>
+              <div id="bton" class="border-top-0 d-flex col-12 c-lg" style="height: 45px;border:solid 1px rgb(219, 212, 212);background-color: rgba(255, 255, 255, 0.658);z-index: 3;">
+                       
+                       <div class="col-6">
+                        <button id="bt" style="z-index: 10;color: rgb(15, 13, 13); text-align: center;" onclick="addToCart('{{this._id}}')"
+                            class="btn btn-outline-light  col-12"><nbsp>ADD TO CART</nbsp></button>
+                        </div>
+                       <div class="col-6">
+                        <a onclick="wishlist('{{this._id}}')" id="tb" class="btn btn-outline-light col-12" style="color:black;">WISH LIST</a>
                        </div>
               </div>
         </div>    
     {{/each}}
+    </div>
     </div>
     </div>
 </section>

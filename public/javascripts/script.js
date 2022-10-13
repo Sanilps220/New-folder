@@ -24,6 +24,18 @@
             })
         }
         
+        function wishlist(id){
+            let alerts = document.getElementById('alerts')
+            $.ajax({
+                url:'/wishlist/'+id,
+                method:'get',
+                success:(response)=>{
+                    alerts.innerHTML='<div class="alert alert-primary sb" role="alert"> This is added to Wishlist! </div>'
+                   setTimeout(function(){alerts.classList.add("hide")},600);
+                }
+            })
+        }
+
         function sendDatas(e){
             let search= document.getElementById('search')
             let searchValue = document.getElementById('sugest')

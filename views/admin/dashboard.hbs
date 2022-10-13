@@ -3,41 +3,48 @@
     {{!-- <div class="row" style="height: 100%;width: 285px;"></div> --}}
     <div class="row col-12 d-flex justify-content-center bklght">
 
-        <div class="col-1 p-3 text-center text-warning border-warning m-2 mb-3 border col1">
+        <div class="col-1 p-3 text-center text-warning border-warning m-2 mb-3 border col1"
+        style=" box-shadow: 0 1px 5px rgb(75, 74, 80);border-radius: 15px;">
 
             <div class="yi">Total users <br>{{users}}</div>
             <input type="text" name="" id="users" value="{{users}}" hidden>
         </div>
-        <div class="col-1 p-3 text-center text-warning border-warning m-2 mb-3 border col2">
+        <div class="col-1 p-3 text-center text-warning border-warning m-2 mb-3 border col2"
+        style=" box-shadow: 0 1px 5px rgb(75, 74, 80);border-radius: 15px;">
 
             <div class="yi">Active users <br>{{active}}</div>
             <input type="text" id="active" value="{{active}}" hidden>
         </div>
-        <div class="col-1 p-3 text-center text-warning border-warning m-2 mb-3 border">
 
-            <div class="yi"> Total products <br>{{products}}</div>
-            
-        </div>
-        <div class="col-1 p-3 text-center text-warning border-warning m-2 mb-3 border">
+        <div class="col-1 p-3 text-center text-warning border-warning m-2 mb-3 border"
+         style=" box-shadow: 0 1px 5px rgb(75, 74, 80);border-radius: 15px;">
 
             <div class="yi" id="yi"> Total orders <br>{{order}}</div>
             <input type="text" id="orders" value="{{order}}" hidden>
         </div>
-    <hr>
-    <h1>Charts</h1>
+        <div class="col-1 p-3 text-center text-warning border-warning m-2 mb-3 border"
+        style=" box-shadow: 0 1px 5px rgb(75, 74, 80);border-radius: 15px;">
+
+            <div class="yi"> Total Revenue <br>₹{{revenue}} </div>            
+        </div>
+    <hr id="{{products}}">
+
+    <h2 style="font-weight: bold; " >Dashboard
+     </h2>
+
         <div class="row mt-5 col-12 justify-content-center ">
 
-            <div class="col-6 mx-1 ">
+            <div class="col-6 mx-1 " style=" box-shadow: 0 1px 5px rgb(75, 74, 80);border-radius: 10px;">
                 <canvas id="myChart4" class="" width="40" height="30"></canvas>
             </div>
-            <div class="col-5 mx-1">
+            <div class="col-5 mx-1"style=" box-shadow: 0 1px 5px rgb(75, 74, 80);border-radius: 10px;">
                 <canvas id="myChart2" class="" width="40" height="30"></canvas>
             </div>
-            <div class="col-12 row" style="padding: 38px;" >
-            <div class="col-5 mx-1">
+            <div class="col-12 row" style="padding: 38px;">
+            <div class="col-5 mx-1" style=" box-shadow: 0 1px 5px rgb(75, 74, 80);border-radius: 10px;">
                 <canvas id="myChart3" class="" width="40" height="30"></canvas>
             </div>
-            <div class="col-6 mx-1">
+            <div class="col-6 mx-1" style=" box-shadow: 0 1px 5px rgb(75, 74, 80);border-radius: 10px;">
                 <canvas id="myChart" class="" width="40" height="20"></canvas>
             </div>
             </div>

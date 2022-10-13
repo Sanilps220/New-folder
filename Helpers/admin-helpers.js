@@ -193,5 +193,13 @@ module.exports = {
             })
             resolve()
         })
+    },
+    getRevanue:()=>{
+        return new Promise(async(resolve,reject)=>{
+            let revenue = await db.get().collection(collection.ORDER_COLLECCTION)
+            .aggregate([ { $match: { "orderObj.status": "Delivered" } }, { $project: { total: "$orderObj.totalAmount" } }, { $project: { total: 1, _id: 0 } },{$group:{_id:null,totalRevenue:{$sum:"$total"}}} ])
+            .toArray()
+            resolve(revenue[0]?.totalRevenue)
+        })
     }
 }

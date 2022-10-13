@@ -42,8 +42,9 @@ router.get('/', async function (req, res, next) {
   let women = await productHelpers.getCat("Women")
   offerProducs = await productHelpers.getOfferProducts()
   console.log(offerProducs);
+  let cwProducts = await productHelpers.cwProducts()
   productHelpers.getAllProducts().then((products) => {
-    res.render('user/view-products', { user, products, cartCount, offerProducs , men ,women ,sub:true});
+    res.render('user/view-products', { user,cwProducts, products, cartCount, offerProducs , men ,women ,sub:true});
   });
 });
 
@@ -51,6 +52,10 @@ router.get('/cat',(req,res)=>{
   productHelpers.getCat().then((cat)=>{
     res.json({cat})
   })
+})
+
+router.get('/load',(req,res)=>{
+  res.render('user/goal',{user:true})
 })
 
 router.post('/searchPro',(req,res)=>{
@@ -84,9 +89,24 @@ router.get('/login', (req, res ) => {
 
 router.get('/local/:id',async(req, res ) => {  
   console.log(req.params.id);
+  const mens = req.params.id;
+  let products = [];
+  if(mens){
+      if(mens =="women"){
+        let product = await productHelpers.getProWomens()
+        products = product;
+      }else{
+    let product = await productHelpers.getProMens()
+    products = product;
+      }
+  }
+  else{
+    let product = await productHelpers.getList(req.params.id)
+    products = product
+  }
   let men = await productHelpers.getCat("Men")
   let women = await productHelpers.getCat("Women")
-  let products = await productHelpers.getList(req.params.id)
+  
   res.render('user/view-pro-by-cat',{user:req.session.user,products,men,women,sub:true}) 
 })
 
@@ -122,35 +142,31 @@ router.post('/profPic/',(req,res)=>{
 
 })
 
-
+ 
 router.post('/phone-verify',(req,res,next)=>{
   
   var phone = req.body.phone
-  console.log(phone);
+  console.log("phone",process.env.serviceSID);
   req.session.mob = phone; //mobile otp login number storing in session
   phone = phone.toString()
-  
+
    userHelpers.phoneCheck(phone).then((response)=>{
-     if(response.userExist){ 
-        twilio.verify
-        .services(serviceSid)
-        .verifications.create({
-        to:`+91${req.body.phone}`,
-        channel:"sms",
-      })
-      .then((ress)=>{
-        console.log(ress);
+       if(response.userExist){ 
+            twilio.verify.v2.services(process.env.serviceSID)
+            .verifications
+            .create({  to:`+91${req.body.phone}`,    channel:"sms"  })
+      .then((verifications)=>{
+        console.log(verifications.status);
         OtpPhone=phone;        
         res.render('user/otp-verify',{OtpPhone}) 
-   })
-    }else{ 
+      }).catch(err => {throw err})
+      }else{ 
       console.log("lopins");
       req.session.loggedInErr = "Invalid Phone Number";
       res.redirect("/login")
     }
   }); //data base  
   OtpPhone = null; // change to default
-
 });
 
 
@@ -244,15 +260,12 @@ router.post('/signup',async(req, res) => {
     .verifications.create({
       to: `+91${req.body.phone}`,
       channel: "sms",
-    }) 
-      .then((ress) => {
-      console.log('message has sent!')
+    }).then((ress) => {      
       let signupPhone = req.body.phone;
-      res.render("user/signupOtp", { signupPhone, refereUser });    
-
-    })
-    .catch((err) => { console.log(err)    })
-    res.redirect('/') 
+      res.render("user/signupOtp", { signupPhone, refereUser });
+      }).catch((err) => {         
+      res.redirect('/')  
+      })
     })
   }else{
     res.render("user/signup",{message:'User Already Exist'})
@@ -262,11 +275,10 @@ router.post('/signup',async(req, res) => {
  
 
 router.get('/signupOtp',async(req,res)=>{
-  console.log(req.query.id);
   phoneNumber = req.query.phoneNumber
   otpNumber = req.query.otpnumber
   
-  twilio.verify.services(process.env.serviceSid2)
+  twilio.verify.services(process.env.serviceSID)
     .verificationChecks.create({
       to: "+91" + phoneNumber,
       code: otpNumber,
@@ -300,7 +312,7 @@ router.get('/wishlist/:id',verifyLogin,(req,res)=>{
       req.params.id,
       req.session.user._id
     ).then(()=>{console.log("Wish list +1");
-      res.json({wish:true})
+      res.send({wish:true})
   })
 })
 

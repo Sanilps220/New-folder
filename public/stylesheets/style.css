@@ -1,11 +1,17 @@
-body  
-{   text-decoration: none;
+body *{
+  font-size: var(--bs-body-font-size); 
+}
+body{
+
+    text-decoration: none;
     margin: 0;  
     padding: 0;  
     background-color:#96e0e2;  
     font-family: Roboto,Arial,sans-serif;
 }  
-
+.hide{
+  display: none;
+}
 .hov{
 text-align: center;
 }

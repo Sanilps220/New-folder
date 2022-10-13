@@ -1,20 +1,21 @@
   <div class="col-12">
     <form id="salesReport">
-        <div class="row">
+        <div class="row" >
             <div class="col">
-                <p>Sales report</p>
-                <div class="px-3 px-4">
-                    <div class="col row">
-                        <div class="col">
+                <p style="padding-top: 20px;padding-botom:10px; font-size: large;font-weight: 400;">SALES REPORT</p>
+                <div class="px-3 px-4" style=" background-color: rgba(108, 167, 223, 0.562); border-radius: 15px; width: 80%;">
+                    <div class="col d-flex "  style="justify-content: space-between;">
+                        <div class="col-4" style="width: ;">
                             <p>Form Date:</p>
-                            <input type="date" name="fromDate" id="fromDate" onClick="getFromDate()" />
+                            <input type="date" style="border: none; border-radius: 5px; background-color: white;" name="fromDate" id="fromDate" onClick="getFromDate()" />
                         </div>
-                        <div class="col">
+                        <div class="col-4" >
                             <p>Till Date:</p>
-                            <input type="date" name="tillDate" id="tillDate" />
+                            <input type="date" style="border: none; border-radius: 5px; background-color: white;" name="tillDate" id="tillDate" />
                         </div>
                     </div>
-                    <div class="col">
+
+                    <div class="col d-flex " style="justify-content: center;">
                         <div class="">
                             <p></p>
                             <button
@@ -31,18 +32,22 @@
   
   
   <hr>
-
+{{#if salesReport}}
+<p><button id="json" onclick="good()" class="btn btn-primary">TO JSON</button>  <button id="pdf" class="btn btn-danger">TO PDF</button></p>
  <div class="kol">
-<table class="table mt-5 ">
+<table class="table mt-5 " id="example">
   <thead>
     <tr>
-      <th scope="col">SL No.</th><th scope="col">Product</th><th scope="col">Sold Qty</th><th scope="col">Selling Price</th><th scope="col">Total Sale</th>
+      <th scope="col" scope="row">SL No.</th>
+      <th scope="col" scope="row">Product</th>
+      <th scope="col" scope="row">Sold Qty</th>
+      <th scope="col" scope="row">Selling Price</th><th scope="col" scope="row">Total Sale</th>
       {{!-- <th scope="col">Landing Coast</th> --}}
       <th scope="col">Profit</th>
     </tr>
   </thead>
   <tbody>
-{{#if salesReport}}{{#each salesReport}}
+{{#each salesReport}}
     <tr>
         <td>{{@index}}</td>
         <td>{{this._id}}</td>
@@ -65,6 +70,32 @@
            method:'get',
            success:()=>{            
            }
-        })
+        })  
     }
   </script>
+{{!--  --}}
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" 
+        crossorigin="anonymous"></script>
+
+
+
+    {{!--  <script src="https://cdn.rawgit.com/simonbengtsson/jsPDF/requirejs-fix-dist/dist/jspdf.debug.js"></script>
+
+    <script src="https://unpkg.com/jspdf-autotable@2.3.2"></script>
+
+    <script src="https://github.com/simonbengtsson/jsPDF-AutoTable"></script>    --}}
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/2.3.5/jspdf.plugin.autotable.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.4.1/jspdf.min.js"></script>    
+<script src="/javascripts/tableHTMLExport.js"></script>
+
+<script >
+  $('#pdf').on('click',function(){
+    $("#example").tableHTMLExport({type:'pdf',filename:'sample.pdf'});
+  })
+    $('#json').on('click',function(){
+    $("#example").tableHTMLExport({type:'json',filename:'sample.json'});
+  })
+
+</script>

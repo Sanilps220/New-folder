@@ -3,12 +3,12 @@
         <nav>
             <input type="checkbox" id="nav-toggle">
             <div class="logo">
-                <a href="/" style="color: white; text-decoration: darksalmon; font-weight: 700; letter-spacing: 3px;">
+                <a href="/" style="color: white; text-decoration: darksalmon; font-weight: 700; letter-spacing: 3px;font-size: 42px;">
                     SHOPIY
                 </a>
             </div>
 
-
+    
             <ul class="links">
                 <li>
                     <a href="/">Products</a>
@@ -68,14 +68,14 @@
     </div>
 </div>
 {{#if sub}}
-<section>
+<section style="border-bottom: 1px solid #ccc; box-shadow: 0 0 10px #ddd;">
     <div class="col-12 bg-light d-flex" style=" height: 35px; border: 4px rgb(10, 9, 9); align-items: center;">
-        <div class="col-5" style="flex: auto; border-radius: 2px;background-color: #fff;">
-        <div class="col-5 d-flex">
-            <input  type="text" id="join" autocomplete="off" placeholder="search for products.." onkeyup="sendData(this)" style="border: #fff;" />
-            <i class="bi bi-search"></i>
-        </div>     
         
+        <div class="col-5" style="flex: auto; border-radius: 2px;background-color: #fff;">
+            <div class="col-5 d-flex">
+                <input  type="text" id="join" autocomplete="off" placeholder="search for products.." onkeyup="sendData(this)" style="border: #fff;" />
+                <i class="bi bi-search"></i>
+            </div>       
         </div>
         <div class="col-2 dropdown">
             MEN <i class="bi bi-chevron-down"></i>
@@ -89,7 +89,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-3 dropdown ">WOMEN <i class="bi bi-chevron-down"></i>
+        <div class="col-2 dropdown ">WOMEN <i class="bi bi-chevron-down"></i>
             <div class="dropdown-content" style="left: -40%; ">
                 <div class="bg-light " style="">
                     Brands <i class="bi bi-caret-right-fill"></i>
@@ -99,7 +99,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-3 dropdown">GROOMING <i class="bi bi-chevron-down"></i>
+        <div class="col-2 dropdown">GROOMING <i class="bi bi-chevron-down"></i>
             <div class="dropdown-content" style="left: -40%; ">
                 <div class="bg-light " style="">
                     Perfumes <i class="bi bi-caret-right-fill"></i>

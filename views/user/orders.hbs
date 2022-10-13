@@ -4,7 +4,7 @@
     <div class="container pt-4">
         <h1>Your Order Summery</h1>
         <div class=" border border-warning">
-            <table class="table ">
+            <table class="table " id="proTable">
   <thead>
     <tr>
       <th scope="col">Date</th>
@@ -116,4 +116,10 @@ function pre(f){
       }
     })
   }
+</script>
+<script>
+
+  $(function(){
+    $('#proTable').DataTable();
+  });
 </script>

@@ -34,29 +34,29 @@
 <div class="row gutters">
 <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12">
 <div class="card h-100" style="">
-	<div class="card-body">
+	<div class="card-body" style="">
 		<div class="account-settings">
 			<div class="user-profile">
 				 <form action="/profPic" method="post"  enctype="multipart/form-data">
 					<div class="user-avatar avatar">
-					<img class="" id="photo" src="/product-images/profile-pic/{{user._id}}.jpg" alt="Maxwell Admin">
+					<img class="" id="photo" src="/product-images/profile-pic/{{user._id}}.jpg" alt="{{user._id}}">
 					<input id="file-input" type="file" name="image" accept="image/*" style="display:none"/>
           			<label for="file" id="uploadButton" style="diaplay:none">Change photo</label>
 					</div>
-					<button id="submitPro" type="submit" style="" class="btn hide">save photo</button>				
+					<button id="submitPro" type="submit"  class="btn " style="display:none;">save photo</button>				
 				</form>  
 				<h5 class="user-name">{{user.Uname}} </h5><h6 class="user-email">{{user.Email}} </h6>				
 			</div>
 			<div class="about">
 				<h5>About</h5>
-				<p>I'm {{user.Uname}}. Full Stack Developer I enjoy creating user-centric, delightful and human experiences.</p>
+				<p>I'm {{user.Uname}}. </p>
 			</div>
 		</div>
 	</div>
 </div>
 </div>
 <div style="" class="column col-xl-9 col-lg-9 col-md-12 col-sm-12 col-12">
-<div class="col-12">
+<div class="col-12" style="display: none;" id="display1">
 	<div class="card">
 		<div class="card-body ">
 			<div class='row'>
@@ -72,7 +72,8 @@
 					
             	</div>				
 			</div>
-			<a href="" class="set btn hide col-2" >Set photo</a>
+			<a href="" class="setPhoto btn hide col-2" >Set photo</a>
+			<a href="" class="col-2 btn btn-warning close "  aria-label="Close">X<i class=" close"></i></a>
 			<a href="" class="download btn hide col-2" id="dwnld" >Download</a>
 			</div>
 			  <!-- input file -->
@@ -283,10 +284,15 @@ $(document).ready (function () {
             avatar = document.querySelector('.avatar'),
 			dwn = document.querySelector('.download'),
 			update = document.querySelector('#submitPro'),
-            set = document.querySelector(".set"),
-			cropper = "";
+            set = document.querySelector(".setPhoto"),
+			closer = document.querySelector(".close"),
+			cropper = "",
+			display1 = document.getElementById("display1");
         // on change show image with crop options
         upload.addEventListener("change", function(e) {
+			display1.style.display = 'block'
+			update.style.display = 'block'
+			closer.style.display = 'block'
             if (e.target.files.length) {
                 // start file reader
                 var reader = new FileReader();
@@ -297,7 +303,7 @@ $(document).ready (function () {
                         img.id = "image";
                         img.width = 400;
                         img.src = e.target.result;
-                  
+						
                         // append new image
                         result.appendChild(img);
                         // show save btn and options
@@ -326,7 +332,7 @@ $(document).ready (function () {
             cropped.classList.remove("hide");
             img_result.classList.remove("hide");			
 			update.classList.remove("hide");
-			set.classList.remove("hide");
+			{{!-- set.classList.remove("hide"); --}}
 
             // show image cropped
             cropped.src = imgSrc;                   
@@ -339,6 +345,9 @@ $(document).ready (function () {
         label.addEventListener("click",function(e){
             upload.click()
         })
+		closer.addEventListener("click",function(e){
+			display1.style.display = 'none';
+		})
 	    set.addEventListener("click",function(e){
             update.submit()
         })	

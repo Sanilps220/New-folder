@@ -9,67 +9,207 @@
         margin-top: 30px;
         margin-bottom: 30px;
     }
+
     .title {
         font-weight: 600
     }
 </style>
-<section style="background-color: beige;" class="mt-4">
-    <h1 class="title page-title"><span>{{products.[0].brand}}</span> </h1>
-    <p>{{products.[0].name}}</p>
-    <br>
-    <hr>
-    <div class="conatiner ">
-        <div class="row" style="margin-right: 0; margin-left: 15px;">             
-             
-                {{#each products}}
-                <div class="col-lg-3 col-md-4 col-sm-6 mt-4 hov">
-                    <a href="/proView/{{this._id}}" style="color: #333;text-decoration: none;">
-                        <div class="card" style=" height: 25rem;">
-                            <div class="card" style="width: 100%;height: 90%; ">
-                                <img class="card-img-top" style=" height:25rem;" src="/product-images/{{this._id}}.jpg"
-                                    alt="Card image cap" />
-                            </div>
-                            <div class="d-flex tick"
-                                style="background-color: rgba(255, 255, 255, 0.658);border-bottom:solid 0px rgb(219, 212, 212);">
-                                <div class="card-body "
-                                    style="padding-top: 0px; z-index: 1;background-color: rgba(255, 255, 255, 0.658);">
-                                    <h5 class="title" style="font-size: 18px;">{{this.brand}} </h5>
-                                    {{!-- <p class="card-text" style="font-size: 15px;">{{this.details}}</p> --}}
-                                </div>
-                                {{!-- <ul class="list-group list-group-flush">
-                                    <li class="list-group-item">Cras justo odio</li>
-                                    <li class="list-group-item">Dapibus ac facilisis in</li>
-                                    <li class="list-group-item">Vestibulum at eros</li>
-                                </ul> --}}
-                                <div class="card-body"
-                                    style="padding-top: 0px;background-color: rgba(255, 255, 255, 0.658);z-index: 1;">
-                                    <p class="card-text" style="font-weight: 600; color: #e97a1e;">₹{{this.price}}</p>
-                                </div>
-                            </div>
 
-                        </div>
-                    </a>
-         
-                    <div id="bton " class="border-top-0 d-flex col-12"
-                        style="height: 45px;border:solid 1px rgb(219, 212, 212);background-color: rgba(255, 255, 255, 0.658);z-index: 3;">
-                       <div class="col-6 ">
-                        <button id="bt" style="z-index: 10;color: rgb(15, 13, 13); text-align: center;" onclick="addToCart('{{this._id}}')"
-                            class="btn btn-outline-light row col-12"><nbsp>ADD TO CART</nbsp></button>
-                        </div>
-                       <div class="col-6 ">
-                        <a href="/wishlist/{{this._id}}" id="tb" class="btn btn-outline-light col-12" style="color:black;">WISH
-                            LIST</a>
-                        </div>
 
-                    </div>
-                        {{!-- <ul class="product-links" style=" position: absolute; ">                            
-                            <li><a  class="add-to-wishlist pt-1" onclick="addToWishlist('{{this._id}}','{{../user._id}}')">
-                            <i class="bi bi-heart"></i>
-                            </a>
+
+<div class="row">
+    <div class="col-2 ">
+        <section style="background-color: rgb(216, 216, 204);border-radius:5px;" class="mt-4 p-1 coloumn">
+         <a href="#" style="text-decoration: none;border-radius:5px;" class="p-2">
+         <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+          class="feather feather-filter me-2">
+          <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
+       </svg>
+        Filter</a>
+ 
+        
+            <div class="col">
+                <!-- card -->
+                <div class="card mb-4 mb-lg-0">
+                    <div class="card-body p-6">
+                        <!-- content -->
+                        <h5 class="mb-3">{{products.[0].brand}}</h5>
+                        <!-- nav -->
+                        <ul class="nav nav-category">
+                            <!-- nav item -->
+                            <li class="nav-item border-bottom w-100">
+                                {{#each products}}
+                                <a href="#" class="nav-link" style="color: rgb(109, 105, 105);">
+                                {{this.name}}
+                                </a>
+                                {{/each}}
                             </li>
-                        </ul> --}}
+                        </ul>
+                    </div>
                 </div>
-                {{/each}}
+            </div>
+            <div class="col">
+             <!-- card -->
+             <div class="card mb-4 mb-lg-0">
+                <div class="card-body p-6">
+                   <!-- content -->
+                   <div>
+                      <h5 class="mb-3">Price</h5>
+                      <div>
+ <div id="priceRange" class="mb-3"></div>
+ <small class="text-muted">Price:</small> <span id="priceRange-value" class="small"></span>
+                      </div>
+                   </div>
+                </div>
+             </div>
+             <!-- col -->
+          </div>
+          <!-- Rating -->
+           <div class="col">
+             <!-- card -->
+             <div class="card mb-4 mb-lg-0">
+                <div class="card-body p-6">
+                   <!-- content -->
+                   <div>
+                      <h5 class="mb-3">Rating</h5>
+                      <div>
+ <div class="form-check mb-2">
+    <!-- input -->
+    <input class="form-check-input" type="checkbox" value="" id="ratingFive">
+    <!-- rating -->
+    <label class="form-check-label" for="ratingFive">
+    <i class="bi bi-star-fill text-warning"></i>
+    <i class="bi bi-star-fill text-warning "></i>
+    <i class="bi bi-star-fill text-warning "></i>
+    <i class="bi bi-star-fill text-warning "></i>
+    <i class="bi bi-star-fill text-warning "></i>
+    </label>
+ </div>
+ <div class="form-check mb-2">
+    <!-- input -->
+    <input class="form-check-input" type="checkbox" value="" id="ratingFour" checked>
+    <!-- rating -->
+    <label class="form-check-label" for="ratingFour">
+    <i class="bi bi-star-fill text-warning"></i>
+    <i class="bi bi-star-fill text-warning "></i>
+    <i class="bi bi-star-fill text-warning "></i>
+    <i class="bi bi-star-fill text-warning "></i>
+    <i class="bi bi-star text-warning"></i>
+    </label>
+ </div>
+ <div class="form-check mb-2">
+    <!-- input -->
+    <input class="form-check-input" type="checkbox" value="" id="ratingThree">
+    <!-- rating -->
+    <label class="form-check-label" for="ratingThree">
+    <i class="bi bi-star-fill text-warning"></i>
+    <i class="bi bi-star-fill text-warning "></i>
+    <i class="bi bi-star-fill text-warning "></i>
+    <i class="bi bi-star text-warning"></i>
+    <i class="bi bi-star text-warning"></i>
+    </label>
+ </div>
+ <div class="form-check mb-2">
+    <!-- input -->
+    <input class="form-check-input" type="checkbox" value="" id="ratingTwo">
+    <!-- rating -->
+    <label class="form-check-label" for="ratingTwo">
+    <i class="bi bi-star-fill text-warning"></i>
+    <i class="bi bi-star-fill text-warning"></i>
+    <i class="bi bi-star text-warning"></i>
+    <i class="bi bi-star text-warning"></i>
+    <i class="bi bi-star text-warning"></i>
+    </label>
+ </div>
+ <div class="form-check mb-2">
+    <!-- input -->
+    <input class="form-check-input" type="checkbox" value="" id="ratingOne">
+    <!-- rating -->
+    <label class="form-check-label" for="ratingOne">
+    <i class="bi bi-star-fill text-warning"></i>
+    <i class="bi bi-star text-warning"></i>
+    <i class="bi bi-star text-warning"></i>
+    <i class="bi bi-star text-warning"></i>
+    <i class="bi bi-star text-warning"></i>
+    </label>
+ </div>
+                      </div>
+                   </div>
+                </div>
+             </div>
+          </div>
+        </section>
+    </div>
+    <div class="col-9">
+   <h3> RESULTS</h3>
+    {{#each products}}
+    <div class="col">
+        <div class="card card-product">
+            <!-- card body -->
+            <div class="card-body">
+                <div class=" row align-items-center">
+                    <!-- col -->
+                    <div class="col-md-4 col-12">
+                        <div class="text-center position-relative ">
+                            <div class=" position-absolute top-0">
+                                <!-- badge --> <span class="badge bg-danger">Sale</span>
+                            </div>
+                            <a href="/proView/{{this._id}}">
+                                <!-- img --><img src="/product-images/{{this._id}}.jpg" alt="Grocery Ecommerce Template"
+                                    class="mb-3 img-fluid" style="height: 218px;">
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-md-8 col-12 flex-grow-1">
+                        <!-- heading -->
+                        <div class="text-small mb-1"><a href="#!"
+                                class="text-decoration-none text-muted"><small>{{this.details}}</small></a>
+                        </div>
+                        <h2 class="fs-6"><a href="/proView/{{this._id}}"
+                                class="text-inherit text-decoration-none">{{this.brand}}</a>
+                        </h2>
+                        <div>
+                            <!-- rating --><small class="text-warning"> <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-half"></i></small> <span class="text-muted small">4.5(149)</span>
+                        </div>
+                        <div class=" mt-6">
+                            <!-- price -->
+                            <div><span class="text-dark">₹{{this.price}}</span> <span
+                                    class="text-decoration-line-through text-muted">₹{{this.price}}</span>
+                            </div>
+                            <!-- btn -->
+                            <div class="mt-3">
+                                <a href="/proView/{{this._id}}"
+                                    class="btn btn-icon btn-sm btn-outline-gray-400 text-muted" data-bs-toggle="modal"
+                                    data-bs-target="#quickViewModal"><i class="bi bi-eye" data-bs-toggle="tooltip"
+                                        data-bs-html="true" title="Quick View"></i></a>
+                                <a href="/wishlist/{{this._id}}"
+                                    class="btn btn-icon btn-sm btn-outline-gray-400 text-muted" data-bs-toggle="tooltip"
+                                    data-bs-html="true" title="Wishlist"><i class="bi bi-heart"></i></a>
+
+                            </div>
+                            <!-- btn -->
+                            <div class="mt-2">
+                                <a onclick="addToCart('{{this._id}}')" class="btn btn-primary ">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round" class="feather feather-shopping-bag me-2">
+                                        <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+                                        <line x1="3" y1="6" x2="21" y2="6"></line>
+                                        <path d="M16 10a4 4 0 0 1-8 0"></path>
+                                    </svg>
+                                    Add to Cart
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-</section>
+    </div>{{/each}}</div>
+   
+</div>

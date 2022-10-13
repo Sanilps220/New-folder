@@ -61,9 +61,7 @@ module.exports = {
 
     phoneCheck:(userPhone) =>{
         return new Promise(async(resolve,reject)=>{
-           let user = await db
-           .get().collection(collection.USER_COLLECTION)
-           .findOne({phone: userPhone});
+           let user = await db.get().collection(collection.USER_COLLECTION).findOne({phone: userPhone});
            if(user){
             console.log("userExist ");
             resolve({userExist:true,user})

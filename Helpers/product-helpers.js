@@ -61,7 +61,14 @@ module.exports={
     },
     getAllProducts:()=>{
         return new Promise(async function(resolve,reject){
-            let products =await db.get().collection(collection.PRODUCT_COLLECTION).find().limit(8).toArray()
+            let products =await db.get().collection(collection.PRODUCT_COLLECTION).find({category:'Men'}).limit(4).toArray()
+            resolve(products)
+        })
+
+    },
+    cwProducts:()=>{
+        return new Promise(async function(resolve,reject){
+            let products =await db.get().collection(collection.PRODUCT_COLLECTION).find({ category: 'Women'}).limit(4).toArray()
             resolve(products)
         })
 
@@ -120,6 +127,23 @@ module.exports={
                 resolve(result);
             })
         }
+        })
+    },
+
+    getProMens:()=>{
+        return new Promise(async(resolve,reject)=>{
+            let men= await db.get().collection(collection.PRODUCT_COLLECTION)
+            .find({ category: "Men"}).toArray()
+            .then((result)=>{
+                resolve(result);
+            })
+        })
+    },
+
+    getProWomens:()=>{
+        return new Promise(async function(resolve,reject){
+            let products =await db.get().collection(collection.PRODUCT_COLLECTION).find({ category: 'Women'}).toArray()
+            resolve(products);
         })
     },
 

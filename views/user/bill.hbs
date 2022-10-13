@@ -89,7 +89,7 @@
 {{#each cartItems}}
                     <div class="text-95 text-secondary-d3">
                         <div class="row mb-2 mb-sm-0 py-25">
-                            <div class="d-none d-sm-block col-1">1</div>
+                            <div class="d-none d-sm-block col-1" id="loop"></div>
                             <div class="col-9 col-sm-5">{{this.product.name}} </div>
                             <div class="d-none d-sm-block col-2">{{this.product.details}} </div>
                             <div class="d-none d-sm-block col-2 text-95">{{this.quantity}} </div>
@@ -137,7 +137,7 @@
                                     SubTotal
                                 </div>
                                 <div class="col-5">
-                                    <span class="text-120 text-secondary-d1">{{total}} </span>
+                                    <span class="text-120 text-secondary-d1" >{{total}} </span>
                                 </div>
                             </div>
 
@@ -155,7 +155,7 @@
                                     Total Amount
                                 </div>
                                 <div class="col-5">
-                                    <span class="text-150 text-success-d3 opacity-2">{{total}} </span>
+                                    <span class="text-150 text-success-d3 opacity-2"  id="totalPrice">{{total}} </span>
                                 </div>
                             </div>
                         </div>
@@ -172,7 +172,20 @@
         </div>
     </div>
 </div>
-    
+<script>
+    let total = document.getElementById("totalPrice").innerHTML
+     document.getElementById("totalPrice").innerHTML = "₹" + total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    var loop = document.querySelectorAll('#loop')
+   console.log(total)
+ var j = 1;
+    for(i=0;i<loop.length;i++ ){
+       
+loop[i].innerHTML = j;
+j=j+1
+      
+    }
+
+</script>    
 <style>
 @media print {
 input#hideme {
