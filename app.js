@@ -1,5 +1,5 @@
 var createError = require('http-errors');
-
+//bVkC0AbgLiuo6O4T
 var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
@@ -27,7 +27,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(fileUpload())
 app.use(session({secret:"Key",cookie:{maxAge:6000000}}))
 
-db.connect((err)=>{if(err)console.log("data base err"+err) ;else console.log('data base connected 27017');})
+//db.connect((err)=>{if(err)console.log("data base err : "+err) ;else console.log('data base connected 27017');})
+db.connect1((err)=>{if(err)console.log("atlas data base err"+err) ;else console.log('data base connected atlas');})
+//db.uri()
 
 app.use('/', userRouter);
 app.use('/admin', adminRouter);

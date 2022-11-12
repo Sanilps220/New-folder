@@ -482,10 +482,13 @@ router.post('/addCoupon',async(req,res)=>{
 router.get('/salesReport',verifyLogin,async(req,res)=>{
   //verifyLogin, let fromDate = new Date(req.query.fromDate)
   // let tillDate = new Date(req.query.tillDate)
+  if(req.query.fromDate !== undefined){
   let salesReport = await productHelpers.getSalesReport(req.query.fromDate,req.query.tillDate)
   console.log(salesReport);
+  res.render('admin/sales-report',{admin:true,salesReport})
+}
   //res.render('admin/sales-report',{salesReport})
-res.render('admin/sales-report',{admin:true,salesReport})
+res.render('admin/sales-report',{admin:true})
 })
 
 

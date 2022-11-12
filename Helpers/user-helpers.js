@@ -11,18 +11,37 @@ var instance = new Razorpay({
     key_id: 'rzp_test_QH34rl1N5IfMxp',
     key_secret: 'SenVXu39BVxXfekGdlCjqzXu',
   });
+const showDate = (time) => {
+    const months = [
+      'January',
+      'February',
+      'March',
+      'April',
+      'May',
+      'June',
+      'July',
+      'August',
+      'September',
+      'October',
+      'November',
+      'December',
+    ]
+  
+    const month = months[time.getMonth()].slice(0, 3)
+    const year = time.getFullYear()
+    const date = time.getDate()
+    return ` ${month} ${date}, ${year}`
+  }
 
 module.exports = {
     doSighnup: function (userData) {
         return new Promise(async (resolve, reject) => {
             userData.Pass = await bcrypt.hash(userData.Pass, 10)
             db.get().collection(collection.USER_COLLECTION).insertOne(userData).then(() => {
-
                 var objectId = userData;
                 resolve(objectId)
             })
         })
-
     },
     doLogin: function (userData) {
         return new Promise(async function (resolve, reject) {
@@ -37,7 +56,6 @@ module.exports = {
                         response.status = true
                         console.log(response.user);
                         resolve(response);
-                    } else {
                         console.log('login failed');
                         resolve({ status: false ,user})
                     }
@@ -337,7 +355,9 @@ module.exports = {
     },
     placeOrder:(order,products,total)=>{
         return new Promise((resolve,reject)=>{
-            console.log(order,products,total);
+            let dateObjs =  new Date()
+            //let dateObjs = showDate(new Date())
+            console.log("dates:"+dateObjs,order,products,total);
             let status = order['payment-method']==='COD'?'placed':'pending'
             let orderObj={
                 deliveryDetails:{
@@ -351,7 +371,7 @@ module.exports = {
                 products:products,
                 totalAmount:total,
                 status:status,
-                date: new Date()
+                date: dateObjs
             }
             db.get().collection(collection.ORDER_COLLECCTION).insertOne({orderObj})
                 .then((response)=>{
@@ -361,9 +381,9 @@ module.exports = {
                     if(response.ops == []) throw "empty"
                 }
                 catch(err){
-                    console.log("nice errr");
+                    console.log("nice errr"); 
                     resolve();
-                }   
+                }    
             
             resolve(response.insertedId) 
         }) 

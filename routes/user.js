@@ -374,15 +374,16 @@ router.post('/place-order', async (req, res) => {
   let products = await userHelpers.getCartProductList(req.body.userId)
   let totalPrice = await userHelpers.getTotalAmount(req.body.userId)
   if(code){
-    let amount =  await userHelpers.getCop(code,req.session.user._id)
-    console.log(amount);
-    totalPrice = totalPrice - amount.value.offer;
     
+    amount =  await userHelpers.getCop(code,req.session.user._id)
+    console.log(amount);
+    if(amount.value !== null){    totalPrice = totalPrice - amount.value.offer;}
+     
   }
   console.log('after add cps',totalPrice);
  
   userHelpers.placeOrder(req.body, products, totalPrice).then((orderId) => {
-    console.log(orderId);
+    console.log(orderId); 
     if(req.body.CouponCode){
       req.session.total 
     }

@@ -1,0 +1,137 @@
+[
+  {
+    "_id": {"$oid":"62e5434e6d293983266061ba"},
+    "name": "Black Jacket ",
+    "details": "Full sleve  ",
+    "price": {"$numberInt":"2000"},
+    "discount": {"$numberInt":"0"},
+    "category":"Women",
+    "productVariants": [
+      {"variantId":{"$oid":"62e5434e6d293983266061b9"}},
+        {"productQuantity": {"$numberInt":"10"}
+      }
+    ],
+    "brand":"D Fashion Hub",
+    "quantity": {"$numberInt":"10"}
+  },
+  {
+    "_id": {"$oid":"62e553b96d293983266061bc"},
+    "name": "Women sharara set  ",
+    "details": "Rayon Fabric   ",
+    "price": {"$numberInt":"996"},
+    "discount": {"$numberInt":"0"},
+    "category":"Women",
+    "productVariants": [
+      {"variantId":{"$oid":"62e553b96d293983266061bb"}},
+        {"productQuantity": {"$numberInt":"10"}
+      }
+    ],
+    "brand":"D Fashion Hub",
+    "quantity": {"$numberInt":"10"}
+  },
+  {
+    "_id": {"$oid":"62e5616733c2b58e0235a0e3"},
+    "name": "Deodrant for Mens   ",
+    "details": "Deodorent ",
+    "price": {"$numberInt":"510"},
+    "discount": {"$numberInt":"0"},
+    "category":"Men",
+    "productVariants": [
+      {"variantId":{"$oid":"62e5616733c2b58e0235a0e2"}},
+        {"productQuantity": {"$numberInt":"10"}
+      }
+    ],
+    "brand":"Deodorant",
+    "quantity": {"$numberInt":"10"}
+  },
+  {
+    "_id": {"$oid":"62e562d3e21acb1bdd32ed2f"},
+    "name": "D-fashion Women",
+    "details": "Trending ",
+    "price": {"$numberInt":"1450",
+    "discount": {"$numberInt":"0"},
+    "category":"Women",
+    "brand":"D Fashion Hub",
+    "productVariants": [
+      {"variantId":{"$oid":"62e562d3e21acb1bdd32ed2e"}},
+        {"productQuantity": {"$numberInt":"10"}
+      }
+    ],
+    "quantity": {"$numberInt":"10"}
+  },
+  {
+    "_id": {"$oid":"62f32558cb7c14323f7f385d"},
+    "name": "Printed Men Round Neck Black T-Shirt",
+    "details": "Printed Men Round Neck Black T-Shirt ",
+    "price": {"$numberInt":"750"},
+    "discount": {"$numberInt":"0"},
+    "category":"Men",
+    "brand":"PUMA",
+    "productVariants": [
+      {"variantId":{"$oid":"62f32558cb7c14323f7f385c"}},
+        {"productQuantity": {"$numberInt":"15"}
+      }
+    ],
+    "quantity": {"$numberInt":"15"}
+  },
+  {
+    "_id": {"$oid":"62f79c5ffb21aa14e746152d"},
+    "name": "angels jewels ",
+    "details": "Alloy Gold-plated Jewel Set  (Gold)  ",
+    "price": {"$numberInt":"300",
+    "discount": {"$numberInt":"0"},
+    "category":"Women",
+    "brand":"angels jewels",
+    "productVariants": [
+      {"variantId":{"$oid":"62f79c5ffb21aa14e746152c"}},
+        {"productQuantity": {"$numberInt":"20"}
+      }
+    ],
+    "quantity": {"$numberInt":"20"}
+  },
+  {
+    "_id": {"$oid":"62f7cbd7799d10d7d536fd84"},
+    "name": "Pond's Me",
+    "details": "Pond's Men Ice Burst Face Gel Face Wash  (55 g) ",
+    "price": {"$numberInt":"180"},
+    "discount": {"$numberInt":"0"},
+    "category":"Men",
+    "brand":"Ponds",
+    "productVariants": [
+      {"variantId":{"$oid":"62f7cbd7799d10d7d536fd83"}},
+        {"productQuantity": {"$numberInt":"15"}
+      }
+    ],
+    "quantity": {"$numberInt":"15"}
+  },
+  {
+    "_id": {"$oid":"62f7cd0a799d10d7d536fd87"},
+    "name": "Wow skin science",
+    "details": "Face moisturizer ",
+    "price": {"$numberInt":"130"},
+    "discount": {"$numberInt":"0"},
+    "category":"All",
+    "brand":"Wow",
+    "productVariants": [
+      {"variantId":{"$oid":"62f7cd0a799d10d7d536fd86"}},
+        {"productQuantity": {"$numberInt":"15"}
+      }
+    ],
+    "quantity": {"$numberInt":"15"}
+  },
+  {
+    "_id": {"$oid":"62f7ce72799d10d7d536fd8a"},
+    "name": "FOGG Body Spray",
+    "details": "Napoleon fogg Deodorant original - For Men (150 ml) ",
+    "price": {"$numberInt":"150"},
+    "discount": {"$numberInt":"0"},
+    "category":"Men",
+    "brand":"FOGG",
+    "productVariants": [
+      {"variantId":{"$oid":"62f7ce72799d10d7d536fd89"}},
+        {"productQuantity": {"$numberInt":"15"}
+      }
+    ],
+    "quantity": {"$numberInt":"15"}
+  }
+]

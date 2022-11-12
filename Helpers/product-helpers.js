@@ -3,6 +3,27 @@ var db = require('../config/connection')
 var collection = require('../config/collections');
 const { response } = require('../app');
 var objectId = require('mongodb').ObjectId
+const showDate = (time) => {
+    const months = [
+      'January',
+      'February',
+      'March',
+      'April',
+      'May',
+      'June',
+      'July',
+      'August',
+      'September', 
+      'October',
+      'November',
+      'December',
+    ]
+  
+    const month = months[time.getMonth()].slice(0, 3)
+    const year = time.getFullYear()
+    const date = time.getDate()
+    return ` ${month} ${date}, ${year}`
+  }
 module.exports={
 
     addProducts:(product,callback)=>{
@@ -434,7 +455,8 @@ module.exports={
         })
     },
     getSalesReport:(fromDate,tillDate)=>{
-        fromDate=new Date(fromDate)
+        console.log("DAtes : "+fromDate);
+        fromDate= new Date(fromDate)
         tillDate=new Date(tillDate)
         console.log(fromDate+" :"+tillDate);
        return new Promise(async(resolve,reject)=>{
@@ -534,7 +556,7 @@ module.exports={
             }
           ]).toArray()
           
-          console.log('==========');
+          console.log(salesReport);
           resolve(salesReport)
         })
       }
