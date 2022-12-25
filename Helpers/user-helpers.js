@@ -353,7 +353,8 @@ module.exports = {
         }
         })
     },
-    placeOrder:(order,products,total)=>{
+     placeOrder:(order,products,total)=>{
+
         return new Promise((resolve,reject)=>{
             let dateObjs =  new Date()
             //let dateObjs = showDate(new Date())
@@ -373,10 +374,20 @@ module.exports = {
                 status:status,
                 date: dateObjs
             }
+           
+
             db.get().collection(collection.ORDER_COLLECCTION).insertOne({orderObj})
                 .then((response)=>{
                 // db.get().collection(collection.CART_COLLECTION).deleteOne({user:objectId(order.userId)
                 // })
+
+                products.map((product)=>{
+                    db.get().collection(collection.PRODUCT_COLLECTION).updateOne({_id:objectId(product.item)},{
+                        $inc:{
+                            "productVariants.$[].productQuantity": - product.quantity,
+                            "quantity":- product.quantity }
+                    })
+                })
                 try {
                     if(response.ops == []) throw "empty"
                 }
